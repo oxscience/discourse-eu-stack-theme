@@ -9,44 +9,72 @@
   -webkit-text-fill-color: transparent;
 }
 
-// Category page title
+// =============================================
+// CATEGORY OVERVIEW (boxes with icons)
+// =============================================
+
+// Category names in the box grid ("Open Campus", "Health", etc.)
+.category-boxes .category-box-heading h3 {
+  @include gradient-text(var(--eu-gradient-subtle));
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+// Category list view (alternative layout)
+.category-list .category h3 a,
+.categories-and-latest h3 .category-name {
+  @include gradient-text(var(--eu-gradient-subtle));
+}
+
+// Category heading on individual category page
 .category-heading p {
   @include gradient-text;
 }
 
-// Topic title on topic page
+// =============================================
+// TOPIC PAGES
+// =============================================
+
+// Topic title on topic detail page
 #topic-title .fancy-title {
   @include gradient-text;
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
-// Welcome banner heading
+// =============================================
+// WELCOME BANNER
+// =============================================
+
+// "Willkommen zurück, Pat!" heading
 .welcome-banner__header {
   @include gradient-text;
 }
 
-// Category names in boxes/cards
-.category-boxes .category-box-heading h3,
-.category-list .category h3 a {
+// =============================================
+// SIDEBAR
+// =============================================
+
+// Section titles: "ADMIN", "KATEGORIEN", etc.
+.sidebar-section-header-text {
   @include gradient-text(var(--eu-gradient-subtle));
+  font-weight: 700;
 }
 
-// User page title
+// =============================================
+// USER PROFILE
+// =============================================
+
 .user-main .about.collapsed-info .user-profile-names .username {
   @include gradient-text;
 }
 
-// Navigation section titles in sidebar
-.sidebar-section-header-text {
-  @include gradient-text(var(--eu-gradient-subtle));
-  font-weight: 700;
-  font-size: var(--font-up-1);
-}
+// =============================================
+// "NEW TOPIC" BUTTON — gradient border glow
+// =============================================
 
-// "New Topic" button gradient border effect
 .sidebar-footer-actions .btn-primary,
-.new-topic-button .btn {
+.horizon-new-topic-button .btn {
   position: relative;
   background: var(--eu-surface-2);
   border: 1px solid transparent;

@@ -5,19 +5,18 @@
 // All partials inlined — Discourse theme components don't support @import
 
 // === EU Stack Design Tokens ===
-// Optimized for dark mode. Light mode uses Horizon's own palette unchanged.
 
 :root {
-  // Gradients
+  // Gradient used for accent text (headings, hero elements)
   --eu-gradient: linear-gradient(135deg, #6d8cff 0%, #a78bfa 50%, #6d8cff 100%);
   --eu-gradient-warm: linear-gradient(135deg, #6d8cff 0%, #f0a030 100%);
   --eu-gradient-subtle: linear-gradient(135deg, #6d8cff 0%, #8da4ff 100%);
 
-  // Surface layers (dark mode)
-  --eu-surface-0: #0f0f11;
-  --eu-surface-1: #1a1a1f;
-  --eu-surface-2: #222227;
-  --eu-surface-3: #2a2a30;
+  // Surface layers (dark mode depth)
+  --eu-surface-0: #0f0f11; // deepest background
+  --eu-surface-1: #1a1a1f; // cards, header
+  --eu-surface-2: #222227; // elevated elements
+  --eu-surface-3: #2a2a30; // hover states
 
   // Borders
   --eu-border: rgba(255, 255, 255, 0.06);
@@ -332,30 +331,18 @@ h1 {
   color: var(--love);
 }
 
-// Nav pills: active = underline only, hover = purple fill
 .nav-pills > li > a {
   border-radius: var(--eu-radius-sm);
-  transition: background-color 0.12s ease, border-color 0.12s ease;
+  transition: background-color 0.12s ease;
 
   &:hover {
-    background: var(--tertiary);
-    color: #fff;
+    background-color: var(--eu-surface-2);
   }
 
   &.active {
-    background: transparent;
-    color: var(--primary);
-    border-bottom: 2px solid var(--tertiary);
-    border-radius: 0;
+    background: var(--tertiary);
+    color: #fff;
   }
-}
-
-// === Lock Icons — red for restricted access ===
-
-.d-icon-lock,
-.d-icon-lock-keyhole {
-  color: var(--danger) !important;
-  opacity: 0.75;
 }
 
 // === Badges & Tags ===
@@ -384,7 +371,7 @@ h1 {
   &.new-topic,
   &.unread-posts {
     background-color: var(--eu-amber);
-    color: var(--secondary);
+    color: #0f0f11;
     font-weight: 700;
   }
 }
@@ -424,14 +411,15 @@ a,
   }
 }
 
-// =============================================
-// SUBCATEGORY PILLS — Hands off, Horizon handles these
-// =============================================
-// Removed: was conflicting with Horizon's own subcategory layout
+// === Lock Icons — red for restricted access ===
 
-// =============================================
-// LMS "NÄCHSTE LEKTION" BUTTON — Truncate long titles
-// =============================================
+.d-icon-lock,
+.d-icon-lock-keyhole {
+  color: var(--danger) !important;
+  opacity: 0.75;
+}
+
+// === LMS "NÄCHSTE LEKTION" BUTTON — Truncate long titles ===
 
 .lms-next-lesson {
   max-width: 100%;
@@ -445,7 +433,6 @@ a,
   display: inline-flex !important;
   align-items: center;
 
-  // On narrow screens: allow wrapping instead
   @media (max-width: 600px) {
     white-space: normal;
     max-width: 100%;

@@ -86,6 +86,25 @@
   @include gradient-text;
 }
 
+// =============================================
+// CATEGORY BOX ICONS — Gradient SVG Icons
+// =============================================
+// Gradient fills applied via inline SVG <defs> in head_tag.html
+// and JS that maps category → gradient ID.
+
+.category-boxes .category-box-heading .badge-category.--style-icon > svg.d-icon {
+  width: 2.5em;
+  height: 2.5em;
+  display: block;
+  margin-bottom: 0.5em;
+  transition: transform 0.2s ease, filter 0.2s ease;
+
+  .category-box:hover & {
+    transform: scale(1.08);
+    filter: brightness(1.2) drop-shadow(0 0 12px rgba(109, 140, 255, 0.3));
+  }
+}
+
 // "Neues Thema" button — gradient border glow
 .sidebar-footer-actions .btn-primary,
 .horizon-new-topic-button .btn {

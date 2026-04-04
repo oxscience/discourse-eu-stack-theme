@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden">
+  <defs>
+    <!-- Green gradient (Health) -->
+    <linearGradient id="eu-grad-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#2E8B47"/>
+    </linearGradient>
+    <!-- Blue gradient (Science, general) -->
+    <linearGradient id="eu-grad-blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6d8cff"/>
+      <stop offset="100%" stop-color="#2E6A9A"/>
+    </linearGradient>
+    <!-- Purple gradient (Pro Teams) -->
+    <linearGradient id="eu-grad-purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#7B4EA0"/>
+    </linearGradient>
+    <!-- Cyan gradient (Tech & KI) -->
+    <linearGradient id="eu-grad-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#67e8f9"/>
+      <stop offset="100%" stop-color="#3A7AAA"/>
+    </linearGradient>
+    <!-- Gray/silver gradient (Open Campus, OX Team) -->
+    <linearGradient id="eu-grad-gray" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#b8b8b8"/>
+      <stop offset="100%" stop-color="#6b6560"/>
+    </linearGradient>
+    <!-- Amber/warm gradient (fallback) -->
+    <linearGradient id="eu-grad-warm" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0a030"/>
+      <stop offset="100%" stop-color="#e06b8d"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<script>
+// Apply SVG gradient fills to category box icons based on their category color
+document.addEventListener("DOMContentLoaded", function() {
+  function applyGradients() {
+    var boxes = document.querySelectorAll(".category-box");
+    boxes.forEach(function(box) {
+      var link = box.querySelector("a.parent-box-link");
+      var svg = box.querySelector("svg.d-icon");
+      if (!link || !svg) return;
+
+      var href = link.getAttribute("href") || "";
+      var gradId;
+
+      // Map categories to gradients
+      if (href.indexOf("/health") > -1) gradId = "eu-grad-green";
+      else if (href.indexOf("/forschung") > -1 || href.indexOf("/science") > -1) gradId = "eu-grad-blue";
+      else if (href.indexOf("/tech") > -1) gradId = "eu-grad-cyan";
+      else if (href.indexOf("/pro-teams") > -1) gradId = "eu-grad-purple";
+      else gradId = "eu-grad-gray";
+
+      // Apply gradient fill to the SVG
+      svg.style.setProperty("color", "url(#" + gradId + ")");
+      svg.style.setProperty("fill", "url(#" + gradId + ")");
+    });
+  }
+
+  // Run on load and after Ember transitions
+  applyGradients();
+
+  // Re-apply on navigation (Discourse is an Ember SPA)
+  var observer = new MutationObserver(function(mutations) {
+    var hasNewBoxes = mutations.some(function(m) {
+      return m.addedNodes.length > 0;
+    });
+    if (hasNewBoxes) {
+      setTimeout(applyGradients, 200);
+    }
+  });
+
+  var target = document.getElementById("main-outlet");
+  if (target) {
+    observer.observe(target, { childList: true, subtree: true });
+  }
+});
+</script>

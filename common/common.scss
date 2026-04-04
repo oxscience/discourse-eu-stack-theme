@@ -45,19 +45,6 @@
   -webkit-text-fill-color: transparent;
 }
 
-// Category names in box grid ("Open Campus", "Health", etc.)
-.category-boxes .category-box-heading h3 {
-  @include gradient-text(var(--eu-gradient-subtle));
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-// Category list view
-.category-list .category h3 a,
-.categories-and-latest h3 .category-name {
-  @include gradient-text(var(--eu-gradient-subtle));
-}
-
 // Category heading on individual category page
 .category-heading p {
   @include gradient-text;
@@ -92,16 +79,12 @@
 // Gradient fills applied via inline SVG <defs> in head_tag.html
 // and JS that maps category → gradient ID.
 
-.category-boxes .category-box-heading .badge-category.--style-icon > svg.d-icon {
-  width: 2.5em;
-  height: 2.5em;
-  display: block;
-  margin-bottom: 0.5em;
-  transition: transform 0.2s ease, filter 0.2s ease;
+// Gradient icon: keep original size, just add hover glow
+svg.eu-gradient-icon {
+  transition: filter 0.2s ease;
 
   .category-box:hover & {
-    transform: scale(1.08);
-    filter: brightness(1.2) drop-shadow(0 0 12px rgba(109, 140, 255, 0.3));
+    filter: brightness(1.15) drop-shadow(0 0 8px rgba(109, 140, 255, 0.25));
   }
 }
 

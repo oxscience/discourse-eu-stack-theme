@@ -411,11 +411,29 @@ a,
   }
 }
 
-// === Subcategory Pills — larger touch targets ===
+// === Subcategory Pills — Gradient-Tint + larger touch targets ===
 
 .category-boxes .subcategory .badge-category {
   font-size: 0.85em !important;
   padding: 0.35em 0.65em !important;
+
+  // Gradient-Tint: subtle wash of category color on dark/light base
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--category-badge-color) 15%, var(--secondary)),
+    color-mix(in srgb, var(--category-badge-color) 5%, var(--secondary))
+  ) !important;
+  border: 1px solid color-mix(in srgb, var(--category-badge-color) 20%, transparent) !important;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--category-badge-color) 25%, var(--secondary)),
+      color-mix(in srgb, var(--category-badge-color) 12%, var(--secondary))
+    ) !important;
+    border-color: color-mix(in srgb, var(--category-badge-color) 35%, transparent) !important;
+  }
 }
 
 // === Lock Icons — red for restricted access ===

@@ -332,18 +332,30 @@ h1 {
   color: var(--love);
 }
 
+// Nav pills: active = underline only, hover = purple fill
 .nav-pills > li > a {
   border-radius: var(--eu-radius-sm);
-  transition: background-color 0.12s ease;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
 
   &:hover {
-    background-color: var(--eu-surface-2);
-  }
-
-  &.active {
     background: var(--tertiary);
     color: #fff;
   }
+
+  &.active {
+    background: transparent;
+    color: var(--primary);
+    border-bottom: 2px solid var(--tertiary);
+    border-radius: 0;
+  }
+}
+
+// === Lock Icons — red for restricted access ===
+
+.d-icon-lock,
+.d-icon-lock-keyhole {
+  color: var(--danger) !important;
+  opacity: 0.75;
 }
 
 // === Badges & Tags ===

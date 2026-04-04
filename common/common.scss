@@ -451,10 +451,11 @@ a,
   }
 }
 
-// === Lock Icons — red for restricted access ===
+// === Lock & Doc Icons — uniform gray ===
 
 .d-icon-lock,
-.d-icon-lock-keyhole {
+.d-icon-lock-keyhole,
+.d-icon-far-file-lines {
   color: var(--primary-medium) !important;
 }
 

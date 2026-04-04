@@ -21,8 +21,8 @@ export default apiInitializer("0.8", (api) => {
       if (box.dataset.euGrad) return;
 
       const link = box.querySelector("a.parent-box-link");
-      // Only target the main category icon in the heading, not doc/lock icons
-      const svg = box.querySelector(".category-box-heading svg.d-icon");
+      // Only target the main category icon (style-icon), not lock/doc icons
+      const svg = box.querySelector(".category-box-heading .badge-category.--style-icon > svg.d-icon");
       if (!link || !svg) return;
 
       const useEl = svg.querySelector("use");

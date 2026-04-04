@@ -16,3 +16,9 @@
   -webkit-text-fill-color: unset;
   color: var(--tertiary);
 }
+
+// Subcategory pills: bigger on mobile for touch targets
+.category-boxes .subcategory .badge-category {
+  font-size: var(--font-0);
+  padding: 0.4em 0.75em;
+}

@@ -197,9 +197,14 @@ html {
 
 .d-header-icons .icon {
   border-radius: var(--eu-radius-sm);
+  background: transparent !important;
 
-  &:hover .d-icon {
-    color: var(--tertiary);
+  &:hover {
+    background: var(--eu-surface-2) !important;
+
+    .d-icon {
+      color: var(--tertiary);
+    }
   }
 }
 

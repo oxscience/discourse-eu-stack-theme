@@ -5,27 +5,29 @@
 // All partials inlined — Discourse theme components don't support @import
 
 // === EU Stack Design Tokens ===
+// Derived from Discourse's own --secondary (bg) and --primary (text)
+// so they automatically adapt to light and dark palettes.
 
 :root {
-  // Gradient used for accent text (headings, hero elements)
-  --eu-gradient: linear-gradient(135deg, #6d8cff 0%, #a78bfa 50%, #6d8cff 100%);
-  --eu-gradient-warm: linear-gradient(135deg, #6d8cff 0%, #f0a030 100%);
-  --eu-gradient-subtle: linear-gradient(135deg, #6d8cff 0%, #8da4ff 100%);
+  // Gradients
+  --eu-gradient: linear-gradient(135deg, var(--tertiary) 0%, #a78bfa 50%, var(--tertiary) 100%);
+  --eu-gradient-warm: linear-gradient(135deg, var(--tertiary) 0%, #f0a030 100%);
+  --eu-gradient-subtle: linear-gradient(135deg, var(--tertiary) 0%, #8da4ff 100%);
 
-  // Surface layers (dark mode depth)
-  --eu-surface-0: #0f0f11; // deepest background
-  --eu-surface-1: #1a1a1f; // cards, header
-  --eu-surface-2: #222227; // elevated elements
-  --eu-surface-3: #2a2a30; // hover states
+  // Surface layers — small steps from the background color
+  --eu-surface-0: var(--secondary);
+  --eu-surface-1: var(--d-content-background, var(--secondary));
+  --eu-surface-2: var(--primary-very-low, var(--secondary));
+  --eu-surface-3: var(--primary-low, var(--secondary));
 
-  // Borders
-  --eu-border: rgba(255, 255, 255, 0.06);
-  --eu-border-hover: rgba(255, 255, 255, 0.12);
+  // Borders — use Discourse's own low-contrast vars
+  --eu-border: var(--primary-low, rgba(0, 0, 0, 0.08));
+  --eu-border-hover: var(--primary-low-mid, rgba(0, 0, 0, 0.15));
 
-  // Shadows
-  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+  // Shadows — subtle, work in both modes
+  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
 
   // Accent
   --eu-amber: #f0a030;
@@ -76,10 +78,7 @@
 // =============================================
 // CATEGORY BOX ICONS — Gradient SVG Icons
 // =============================================
-// Gradient fills applied via inline SVG <defs> in head_tag.html
-// and JS that maps category → gradient ID.
 
-// Gradient icon: keep original size, just add hover glow
 svg.eu-gradient-icon {
   transition: filter 0.2s ease;
 
@@ -141,14 +140,12 @@ html {
 .dropdown-menu,
 .user-menu,
 .search-menu-container {
-  background-color: var(--eu-surface-1) !important;
   border: 1px solid var(--eu-border);
   border-radius: var(--eu-radius);
   box-shadow: var(--eu-shadow-md);
 }
 
 .d-editor-container {
-  background-color: var(--eu-surface-1);
   border-radius: var(--eu-radius);
 }
 
@@ -194,7 +191,6 @@ html {
 // === Header ===
 
 .d-header-wrap .d-header {
-  background-color: var(--eu-surface-1);
   border-bottom: 1px solid var(--eu-border);
   backdrop-filter: blur(12px);
 }
@@ -210,7 +206,6 @@ html {
 .search-menu .search-input,
 .search-menu-container .search-input {
   border-radius: var(--eu-radius);
-  background-color: var(--eu-surface-2);
   border-color: var(--eu-border);
 
   &:focus-within {
@@ -371,7 +366,7 @@ h1 {
   &.new-topic,
   &.unread-posts {
     background-color: var(--eu-amber);
-    color: #0f0f11;
+    color: var(--secondary);
     font-weight: 700;
   }
 }
@@ -407,7 +402,7 @@ a,
   border-radius: 4px;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--primary-low-mid);
   }
 }
 

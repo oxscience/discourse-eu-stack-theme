@@ -422,17 +422,32 @@ a,
 }
 
 .category-boxes .subcategory {
-  font-size: var(--font-0) !important; // bump from ~10px to base size
+  font-size: var(--font-0) !important;
 
   .badge-category__wrapper {
-    padding: 0.35em 0.7em !important;
+    padding: 0.35em 0.75em !important;
     border-radius: var(--eu-radius-sm);
     font-size: var(--font-down-0-5) !important;
     line-height: 1.4;
-    transition: background-color 0.12s ease, border-color 0.12s ease;
+
+    // Gradient-Tint: dark base with a subtle wash of the category color
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--category-badge-color) 15%, var(--eu-surface-1)),
+      var(--eu-surface-2)
+    ) !important;
+    color: color-mix(in srgb, var(--category-badge-color) 60%, var(--primary)) !important;
+    border: 1px solid color-mix(in srgb, var(--category-badge-color) 20%, transparent) !important;
+    transition: all 0.15s ease;
 
     &:hover {
-      border-color: var(--eu-border-hover);
+      background: linear-gradient(
+        135deg,
+        color-mix(in srgb, var(--category-badge-color) 25%, var(--eu-surface-1)),
+        color-mix(in srgb, var(--category-badge-color) 10%, var(--eu-surface-2))
+      ) !important;
+      border-color: color-mix(in srgb, var(--category-badge-color) 35%, transparent) !important;
+      color: color-mix(in srgb, var(--category-badge-color) 40%, var(--primary)) !important;
     }
   }
 }

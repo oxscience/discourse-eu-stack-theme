@@ -425,55 +425,27 @@ a,
 }
 
 // =============================================
-// SUBCATEGORY PILLS — Larger, responsive
+// SUBCATEGORY PILLS — Minimal styling, let Horizon handle layout
 // =============================================
+// Only add the gradient-tint color effect, no layout/font overrides
 
-.category-boxes .subcategories {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4em;
-}
+.category-boxes .subcategory .badge-category__wrapper {
+  // Gradient-Tint: subtle wash of category color
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--category-badge-color) 15%, var(--secondary)),
+    color-mix(in srgb, var(--category-badge-color) 5%, var(--secondary))
+  ) !important;
+  border: 1px solid color-mix(in srgb, var(--category-badge-color) 20%, transparent) !important;
+  transition: all 0.15s ease;
 
-.category-boxes .subcategory {
-  font-size: var(--font-0) !important;
-
-  .badge-category__wrapper {
-    padding: 0.35em 0.75em !important;
-    border-radius: var(--eu-radius-sm);
-    font-size: var(--font-down-0-5) !important;
-    line-height: 1.4;
-
-    // Gradient-Tint: dark base with a subtle wash of the category color
+  &:hover {
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--category-badge-color) 15%, var(--eu-surface-1)),
-      var(--eu-surface-2)
+      color-mix(in srgb, var(--category-badge-color) 25%, var(--secondary)),
+      color-mix(in srgb, var(--category-badge-color) 12%, var(--secondary))
     ) !important;
-    color: color-mix(in srgb, var(--category-badge-color) 60%, var(--primary)) !important;
-    border: 1px solid color-mix(in srgb, var(--category-badge-color) 20%, transparent) !important;
-    transition: all 0.15s ease;
-
-    &:hover {
-      background: linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--category-badge-color) 25%, var(--eu-surface-1)),
-        color-mix(in srgb, var(--category-badge-color) 10%, var(--eu-surface-2))
-      ) !important;
-      border-color: color-mix(in srgb, var(--category-badge-color) 35%, transparent) !important;
-      color: color-mix(in srgb, var(--category-badge-color) 40%, var(--primary)) !important;
-    }
-  }
-}
-
-// Mobile: pills stack vertically, full width
-@media (max-width: 480px) {
-  .category-boxes .subcategories {
-    flex-direction: column;
-  }
-
-  .category-boxes .subcategory .badge-category__wrapper {
-    width: 100%;
-    justify-content: center;
+    border-color: color-mix(in srgb, var(--category-badge-color) 35%, transparent) !important;
   }
 }
 

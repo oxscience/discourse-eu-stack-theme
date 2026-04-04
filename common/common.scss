@@ -333,15 +333,19 @@ h1 {
 
 .nav-pills > li > a {
   border-radius: var(--eu-radius-sm);
-  transition: background-color 0.12s ease;
+  transition: all 0.12s ease;
 
   &:hover {
-    background-color: var(--eu-surface-2);
+    background: var(--tertiary) !important;
+    color: #fff !important;
   }
 
   &.active {
-    background: var(--tertiary);
-    color: #fff;
+    background: transparent !important;
+    color: var(--tertiary) !important;
+    border-bottom: 2px solid var(--tertiary);
+    border-radius: var(--eu-radius-sm) var(--eu-radius-sm) 0 0;
+    font-weight: 700;
   }
 }
 

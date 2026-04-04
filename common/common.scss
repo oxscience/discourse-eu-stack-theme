@@ -420,6 +420,7 @@ a,
 // tinted text, colored border.
 
 .category-boxes .subcategory .badge-category__wrapper {
+  font-size: 0.8rem !important;
   padding: 0.35em 0.75em !important;
   border-radius: var(--eu-radius-sm);
   line-height: 1.4;

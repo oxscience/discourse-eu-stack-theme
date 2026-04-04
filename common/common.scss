@@ -46,15 +46,16 @@
 }
 
 // Category names in box grid ("Open Campus", "Health", etc.)
-.category-boxes .category-box-heading h3 {
+// Target the actual text element, not the parent h3
+.category-boxes .category-box-heading h3 .badge-category__name {
   @include gradient-text(var(--eu-gradient-subtle));
   font-weight: 800;
   letter-spacing: -0.02em;
 }
 
 // Category list view
-.category-list .category h3 a,
-.categories-and-latest h3 .category-name {
+.category-list .category h3 .badge-category__name,
+.categories-and-latest h3 .badge-category__name {
   @include gradient-text(var(--eu-gradient-subtle));
 }
 

@@ -1,14 +1,410 @@
 // EU Stack Dark — OX Campus Theme Component
 // Warm dark theme inspired by the EU Stack landing page
 // Layers on top of Horizon base theme
+//
+// All partials inlined — Discourse theme components don't support @import
 
-@import "scss/variables";
-@import "scss/gradient-text";
-@import "scss/surfaces";
-@import "scss/topic-list";
-@import "scss/header";
-@import "scss/sidebar";
-@import "scss/typography";
-@import "scss/buttons";
-@import "scss/badges";
-@import "scss/transitions";
+// === EU Stack Design Tokens ===
+
+:root {
+  // Gradient used for accent text (headings, hero elements)
+  --eu-gradient: linear-gradient(135deg, #6d8cff 0%, #a78bfa 50%, #6d8cff 100%);
+  --eu-gradient-warm: linear-gradient(135deg, #6d8cff 0%, #f0a030 100%);
+  --eu-gradient-subtle: linear-gradient(135deg, #6d8cff 0%, #8da4ff 100%);
+
+  // Surface layers (dark mode depth)
+  --eu-surface-0: #0f0f11; // deepest background
+  --eu-surface-1: #1a1a1f; // cards, header
+  --eu-surface-2: #222227; // elevated elements
+  --eu-surface-3: #2a2a30; // hover states
+
+  // Borders
+  --eu-border: rgba(255, 255, 255, 0.06);
+  --eu-border-hover: rgba(255, 255, 255, 0.12);
+
+  // Shadows
+  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+
+  // Accent
+  --eu-amber: #f0a030;
+
+  // Spacing
+  --eu-radius: 10px;
+  --eu-radius-sm: 6px;
+  --eu-radius-lg: 14px;
+}
+
+// === Gradient Text ===
+
+@mixin gradient-text($gradient: var(--eu-gradient)) {
+  background: $gradient;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+// Category names in box grid ("Open Campus", "Health", etc.)
+.category-boxes .category-box-heading h3 {
+  @include gradient-text(var(--eu-gradient-subtle));
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+// Category list view
+.category-list .category h3 a,
+.categories-and-latest h3 .category-name {
+  @include gradient-text(var(--eu-gradient-subtle));
+}
+
+// Category heading on individual category page
+.category-heading p {
+  @include gradient-text;
+}
+
+// Topic title on topic detail page
+#topic-title .fancy-title {
+  @include gradient-text;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+// "Willkommen zurück!" heading
+.welcome-banner__header {
+  @include gradient-text;
+}
+
+// Sidebar section titles: "ADMIN", "KATEGORIEN"
+.sidebar-section-header-text {
+  @include gradient-text(var(--eu-gradient-subtle));
+  font-weight: 700;
+}
+
+// User profile name
+.user-main .about.collapsed-info .user-profile-names .username {
+  @include gradient-text;
+}
+
+// "Neues Thema" button — gradient border glow
+.sidebar-footer-actions .btn-primary,
+.horizon-new-topic-button .btn {
+  position: relative;
+  background: var(--eu-surface-2);
+  border: 1px solid transparent;
+  background-clip: padding-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    background: var(--eu-gradient);
+    z-index: -1;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover::before {
+    opacity: 0.8;
+  }
+}
+
+// === Surfaces & Depth ===
+
+html {
+  background-color: var(--eu-surface-0);
+}
+
+#main-outlet {
+  background-color: var(--eu-surface-0);
+}
+
+.sidebar-wrapper .sidebar-container {
+  background-color: transparent;
+}
+
+.topic-list .topic-list-item {
+  border-bottom: 1px solid var(--eu-border);
+}
+
+.modal-inner-container {
+  background-color: var(--eu-surface-1);
+  border: 1px solid var(--eu-border);
+  border-radius: var(--eu-radius-lg);
+  box-shadow: var(--eu-shadow-lg);
+}
+
+.select-kit .select-kit-collection,
+.dropdown-menu,
+.user-menu,
+.search-menu-container {
+  background-color: var(--eu-surface-1) !important;
+  border: 1px solid var(--eu-border);
+  border-radius: var(--eu-radius);
+  box-shadow: var(--eu-shadow-md);
+}
+
+.d-editor-container {
+  background-color: var(--eu-surface-1);
+  border-radius: var(--eu-radius);
+}
+
+.topic-body {
+  border-top-color: var(--eu-border);
+}
+
+// === Topic List ===
+
+.topic-list .topic-list-item {
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  border-radius: var(--eu-radius);
+
+  &:hover {
+    background-color: var(--eu-surface-2);
+    box-shadow: var(--eu-shadow-sm);
+  }
+}
+
+.topic-list .topic-list-data .link-top-line a.title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.topic-list .topic-list-item.visited .link-top-line a.title {
+  opacity: 0.65;
+}
+
+.topic-list .topic-list-item .topic-statuses .pinned {
+  color: var(--eu-amber);
+}
+
+.badge-category__wrapper {
+  border-radius: var(--eu-radius-sm);
+}
+
+.topic-excerpt {
+  color: var(--primary-medium);
+  font-size: var(--font-down-1);
+  line-height: 1.5;
+}
+
+// === Header ===
+
+.d-header-wrap .d-header {
+  background-color: var(--eu-surface-1);
+  border-bottom: 1px solid var(--eu-border);
+  backdrop-filter: blur(12px);
+}
+
+.d-header-icons .icon {
+  border-radius: var(--eu-radius-sm);
+
+  &:hover .d-icon {
+    color: var(--tertiary);
+  }
+}
+
+.search-menu .search-input,
+.search-menu-container .search-input {
+  border-radius: var(--eu-radius);
+  background-color: var(--eu-surface-2);
+  border-color: var(--eu-border);
+
+  &:focus-within {
+    border-color: var(--tertiary);
+    box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.15);
+  }
+}
+
+.category-breadcrumb {
+  li .badge-category {
+    border-radius: var(--eu-radius-sm);
+  }
+}
+
+// === Sidebar ===
+
+.sidebar-section-link {
+  border-radius: var(--eu-radius-sm);
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background-color: var(--eu-surface-2);
+  }
+
+  &.active {
+    background-color: var(--eu-surface-2);
+    border-left: 2px solid var(--tertiary);
+  }
+}
+
+.sidebar-section-wrapper + .sidebar-section-wrapper {
+  border-top: 1px solid var(--eu-border);
+}
+
+.sidebar-footer-wrapper {
+  border-top: 1px solid var(--eu-border);
+}
+
+// === Typography ===
+
+:root {
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
+    "Helvetica Neue", sans-serif;
+  --heading-font-family: var(--font-family);
+}
+
+h1, h2, h3, h4 {
+  letter-spacing: -0.02em;
+  font-weight: 700;
+}
+
+h1 {
+  font-weight: 800;
+}
+
+.cooked {
+  line-height: 1.7;
+  font-size: var(--font-up-1);
+
+  h2, h3 {
+    margin-top: 1.5em;
+  }
+
+  code {
+    background-color: var(--eu-surface-2);
+    border: 1px solid var(--eu-border);
+    border-radius: 4px;
+    padding: 0.15em 0.4em;
+    font-size: 0.9em;
+  }
+
+  pre code {
+    background-color: var(--eu-surface-1);
+    border-radius: var(--eu-radius);
+    border: 1px solid var(--eu-border);
+  }
+
+  blockquote {
+    border-left: 3px solid var(--tertiary);
+    background: var(--eu-surface-1);
+    border-radius: 0 var(--eu-radius-sm) var(--eu-radius-sm) 0;
+    padding: 0.8em 1.2em;
+  }
+}
+
+// === Buttons ===
+
+.btn {
+  border-radius: var(--eu-radius-sm);
+  transition: all 0.15s ease;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--tertiary);
+  border: none;
+  box-shadow: var(--eu-shadow-sm);
+
+  &:hover {
+    filter: brightness(1.1);
+    box-shadow: var(--eu-shadow-md);
+  }
+}
+
+.btn-default,
+.btn-flat {
+  background-color: var(--eu-surface-2);
+  border: 1px solid var(--eu-border);
+
+  &:hover {
+    background-color: var(--eu-surface-3);
+    border-color: var(--eu-border-hover);
+  }
+}
+
+.btn-toggle-reply-likes.has-likes .d-icon,
+.toggle-like.has-likes .d-icon {
+  color: var(--love);
+}
+
+.nav-pills > li > a {
+  border-radius: var(--eu-radius-sm);
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background-color: var(--eu-surface-2);
+  }
+
+  &.active {
+    background: var(--tertiary);
+    color: #fff;
+  }
+}
+
+// === Badges & Tags ===
+
+.discourse-tag {
+  border-radius: var(--eu-radius-sm);
+  padding: 0.15em 0.5em;
+  font-size: var(--font-down-1);
+  background-color: var(--eu-surface-2);
+  border: 1px solid var(--eu-border);
+  transition: all 0.12s ease;
+
+  &:hover {
+    border-color: var(--eu-border-hover);
+    background-color: var(--eu-surface-3);
+  }
+}
+
+.user-badge {
+  border-radius: var(--eu-radius-sm);
+}
+
+.badge-notification {
+  border-radius: var(--eu-radius-sm);
+
+  &.new-topic,
+  &.unread-posts {
+    background-color: var(--eu-amber);
+    color: #0f0f11;
+    font-weight: 700;
+  }
+}
+
+// === Transitions & Polish ===
+
+a,
+.btn,
+.nav-pills > li > a,
+.sidebar-section-link,
+.select-kit .select-kit-row {
+  transition: color 0.12s ease, background-color 0.12s ease,
+    border-color 0.12s ease, box-shadow 0.15s ease, opacity 0.12s ease;
+}
+
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.3);
+  border-radius: var(--eu-radius-sm);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--eu-surface-3);
+  border-radius: 4px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}

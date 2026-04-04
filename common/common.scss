@@ -5,28 +5,30 @@
 // All partials inlined — Discourse theme components don't support @import
 
 // === EU Stack Design Tokens ===
-// Dark-first defaults, overridden in light mode via Discourse's .light-scheme
+// Built on Discourse's own color variables for automatic light/dark adaptation.
+// --secondary = background, --primary = text, --tertiary = accent
 
 :root {
-  // Gradients
-  --eu-gradient: linear-gradient(135deg, #6d8cff 0%, #a78bfa 50%, #6d8cff 100%);
-  --eu-gradient-warm: linear-gradient(135deg, #6d8cff 0%, #f0a030 100%);
-  --eu-gradient-subtle: linear-gradient(135deg, #6d8cff 0%, #8da4ff 100%);
+  // Gradients — use Discourse's tertiary as base
+  --eu-gradient: linear-gradient(135deg, var(--tertiary) 0%, #a78bfa 50%, var(--tertiary) 100%);
+  --eu-gradient-warm: linear-gradient(135deg, var(--tertiary) 0%, #f0a030 100%);
+  --eu-gradient-subtle: linear-gradient(135deg, var(--tertiary) 0%, #8da4ff 100%);
 
-  // Surface layers — dark mode defaults
-  --eu-surface-0: #0f0f11;
-  --eu-surface-1: #1a1a1f;
-  --eu-surface-2: #222227;
-  --eu-surface-3: #2a2a30;
+  // Surface layers — derived from Discourse's own background (--secondary)
+  // Uses color-mix to create slight variations from the base background
+  --eu-surface-0: var(--secondary);
+  --eu-surface-1: color-mix(in srgb, var(--secondary) 95%, var(--primary));
+  --eu-surface-2: color-mix(in srgb, var(--secondary) 90%, var(--primary));
+  --eu-surface-3: color-mix(in srgb, var(--secondary) 84%, var(--primary));
 
-  // Borders
-  --eu-border: rgba(255, 255, 255, 0.06);
-  --eu-border-hover: rgba(255, 255, 255, 0.12);
+  // Borders — derived from primary with low opacity
+  --eu-border: color-mix(in srgb, var(--primary) 8%, transparent);
+  --eu-border-hover: color-mix(in srgb, var(--primary) 15%, transparent);
 
   // Shadows
-  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
 
   // Accent
   --eu-amber: #f0a030;
@@ -35,50 +37,6 @@
   --eu-radius: 10px;
   --eu-radius-sm: 6px;
   --eu-radius-lg: 14px;
-}
-
-// === Light Mode Overrides ===
-// Discourse applies .light-scheme class on <html> when light palette is active
-
-html.light-scheme {
-  --eu-gradient: linear-gradient(135deg, #4a6cf7 0%, #7c5cbf 50%, #4a6cf7 100%);
-  --eu-gradient-subtle: linear-gradient(135deg, #4a6cf7 0%, #6b85e8 100%);
-
-  --eu-surface-0: #f8f8fa;
-  --eu-surface-1: #ffffff;
-  --eu-surface-2: #f0f0f4;
-  --eu-surface-3: #e6e6ec;
-
-  --eu-border: rgba(0, 0, 0, 0.08);
-  --eu-border-hover: rgba(0, 0, 0, 0.15);
-
-  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
-
-  --eu-amber: #d48820;
-}
-
-// Fallback: also support prefers-color-scheme
-@media (prefers-color-scheme: light) {
-  html:not(.dark-scheme) {
-    --eu-gradient: linear-gradient(135deg, #4a6cf7 0%, #7c5cbf 50%, #4a6cf7 100%);
-    --eu-gradient-subtle: linear-gradient(135deg, #4a6cf7 0%, #6b85e8 100%);
-
-    --eu-surface-0: #f8f8fa;
-    --eu-surface-1: #ffffff;
-    --eu-surface-2: #f0f0f4;
-    --eu-surface-3: #e6e6ec;
-
-    --eu-border: rgba(0, 0, 0, 0.08);
-    --eu-border-hover: rgba(0, 0, 0, 0.15);
-
-    --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.06);
-    --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
-
-    --eu-amber: #d48820;
-  }
 }
 
 // === Gradient Text ===

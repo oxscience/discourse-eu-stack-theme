@@ -1,0 +1,34 @@
+// === Badges & Tags ===
+// Color-coded badges with softer look
+
+// Tag badges
+.discourse-tag {
+  border-radius: var(--eu-radius-sm);
+  padding: 0.15em 0.5em;
+  font-size: var(--font-down-1);
+  background-color: var(--eu-surface-2);
+  border: 1px solid var(--eu-border);
+  transition: all 0.12s ease;
+
+  &:hover {
+    border-color: var(--eu-border-hover);
+    background-color: var(--eu-surface-3);
+  }
+}
+
+// Trust level badges
+.user-badge {
+  border-radius: var(--eu-radius-sm);
+}
+
+// Notification badges — amber glow
+.badge-notification {
+  border-radius: var(--eu-radius-sm);
+
+  &.new-topic,
+  &.unread-posts {
+    background-color: var(--eu-amber);
+    color: #0f0f11;
+    font-weight: 700;
+  }
+}

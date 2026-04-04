@@ -1,0 +1,41 @@
+// === Topic List Refinements ===
+// Subtle card feel with hover depth
+
+// Topic cards hover effect
+.topic-list .topic-list-item {
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+  border-radius: var(--eu-radius);
+
+  &:hover {
+    background-color: var(--eu-surface-2);
+    box-shadow: var(--eu-shadow-sm);
+  }
+}
+
+// Topic title link — slightly brighter
+.topic-list .topic-list-data .link-top-line a.title {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+// Visited topics — more muted
+.topic-list .topic-list-item.visited .link-top-line a.title {
+  opacity: 0.65;
+}
+
+// Pinned/featured topic indicator
+.topic-list .topic-list-item .topic-statuses .pinned {
+  color: var(--eu-amber);
+}
+
+// Category badge pills — softer
+.badge-category__wrapper {
+  border-radius: var(--eu-radius-sm);
+}
+
+// Topic excerpt
+.topic-excerpt {
+  color: var(--primary-medium);
+  font-size: var(--font-down-1);
+  line-height: 1.5;
+}

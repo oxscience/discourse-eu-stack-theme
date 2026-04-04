@@ -1,0 +1,18 @@
+// === Mobile-specific refinements ===
+
+// Tighter spacing on mobile
+.topic-list .topic-list-item {
+  padding: 0.6em 0.8em;
+}
+
+// Full-width header
+.d-header-wrap .d-header {
+  backdrop-filter: blur(8px);
+}
+
+// Gradient text: simpler on mobile (less elements)
+.sidebar-section-header-text {
+  background: none;
+  -webkit-text-fill-color: unset;
+  color: var(--tertiary);
+}

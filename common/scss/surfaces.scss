@@ -1,0 +1,52 @@
+// === Surface & Depth System ===
+// Layered dark surfaces with warm undertone
+
+// Main background gets deepest surface
+html {
+  background-color: var(--eu-surface-0);
+}
+
+// Content area gets slightly elevated surface
+#main-outlet {
+  background-color: var(--eu-surface-0);
+}
+
+// Sidebar gets surface-1
+.sidebar-wrapper .sidebar-container {
+  background-color: transparent;
+}
+
+// Cards and elevated elements get surface-1
+.topic-list .topic-list-item {
+  border-bottom: 1px solid var(--eu-border);
+}
+
+// Modal backgrounds
+.modal-inner-container {
+  background-color: var(--eu-surface-1);
+  border: 1px solid var(--eu-border);
+  border-radius: var(--eu-radius-lg);
+  box-shadow: var(--eu-shadow-lg);
+}
+
+// Dropdown menus
+.select-kit .select-kit-collection,
+.dropdown-menu,
+.user-menu,
+.search-menu-container {
+  background-color: var(--eu-surface-1) !important;
+  border: 1px solid var(--eu-border);
+  border-radius: var(--eu-radius);
+  box-shadow: var(--eu-shadow-md);
+}
+
+// Composer
+.d-editor-container {
+  background-color: var(--eu-surface-1);
+  border-radius: var(--eu-radius);
+}
+
+// Post stream
+.topic-body {
+  border-top-color: var(--eu-border);
+}

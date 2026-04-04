@@ -1,0 +1,38 @@
+// === Transitions & Polish ===
+// Smooth, subtle animations
+
+// Global smooth transitions on interactive elements
+a,
+.btn,
+.nav-pills > li > a,
+.sidebar-section-link,
+.select-kit .select-kit-row {
+  transition: color 0.12s ease, background-color 0.12s ease,
+    border-color 0.12s ease, box-shadow 0.15s ease, opacity 0.12s ease;
+}
+
+// Focus ring: blue glow instead of default outline
+*:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.3);
+  border-radius: var(--eu-radius-sm);
+}
+
+// Scrollbar styling (webkit)
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--eu-surface-3);
+  border-radius: 4px;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+  }
+}

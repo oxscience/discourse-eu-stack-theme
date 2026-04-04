@@ -1,0 +1,37 @@
+// === Header ===
+// Clean header with subtle bottom border
+
+.d-header-wrap .d-header {
+  background-color: var(--eu-surface-1);
+  border-bottom: 1px solid var(--eu-border);
+  backdrop-filter: blur(12px);
+}
+
+// Header icons — softer hover
+.d-header-icons .icon {
+  border-radius: var(--eu-radius-sm);
+
+  &:hover .d-icon {
+    color: var(--tertiary);
+  }
+}
+
+// Search box
+.search-menu .search-input,
+.search-menu-container .search-input {
+  border-radius: var(--eu-radius);
+  background-color: var(--eu-surface-2);
+  border-color: var(--eu-border);
+
+  &:focus-within {
+    border-color: var(--tertiary);
+    box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.15);
+  }
+}
+
+// Breadcrumbs on category pages
+.category-breadcrumb {
+  li .badge-category {
+    border-radius: var(--eu-radius-sm);
+  }
+}

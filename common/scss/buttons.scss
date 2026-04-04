@@ -1,0 +1,53 @@
+// === Buttons ===
+// Rounded, smooth, with subtle depth
+
+.btn {
+  border-radius: var(--eu-radius-sm);
+  transition: all 0.15s ease;
+  font-weight: 600;
+}
+
+// Primary buttons — gradient background
+.btn-primary {
+  background: var(--tertiary);
+  border: none;
+  box-shadow: var(--eu-shadow-sm);
+
+  &:hover {
+    filter: brightness(1.1);
+    box-shadow: var(--eu-shadow-md);
+  }
+}
+
+// Default/flat buttons — subtle surface
+.btn-default,
+.btn-flat {
+  background-color: var(--eu-surface-2);
+  border: 1px solid var(--eu-border);
+
+  &:hover {
+    background-color: var(--eu-surface-3);
+    border-color: var(--eu-border-hover);
+  }
+}
+
+// Like button active state
+.btn-toggle-reply-likes.has-likes .d-icon,
+.toggle-like.has-likes .d-icon {
+  color: var(--love);
+}
+
+// Nav pills
+.nav-pills > li > a {
+  border-radius: var(--eu-radius-sm);
+  transition: background-color 0.12s ease;
+
+  &:hover {
+    background-color: var(--eu-surface-2);
+  }
+
+  &.active {
+    background: var(--tertiary);
+    color: #fff;
+  }
+}

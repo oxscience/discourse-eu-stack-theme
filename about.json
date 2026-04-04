@@ -1,0 +1,28 @@
+{
+  "name": "EU Stack Dark — OX Campus",
+  "about_url": "https://github.com/oxscience/discourse-eu-stack-theme",
+  "license_url": "https://github.com/oxscience/discourse-eu-stack-theme/blob/main/LICENSE",
+  "component": true,
+  "minimum_discourse_version": "3.3.0",
+  "maximum_discourse_version": null,
+  "authors": "OX Science",
+  "theme_version": "1.0.0",
+  "modifiers": {},
+  "assets": {},
+  "color_schemes": {
+    "EU Stack Dark": {
+      "primary": "e8e6e3",
+      "secondary": "0f0f11",
+      "tertiary": "6d8cff",
+      "quaternary": "a78bfa",
+      "header_background": "1a1a1f",
+      "header_primary": "e8e6e3",
+      "selected": "1e2a4a",
+      "hover": "252529",
+      "highlight": "2d2518",
+      "danger": "f87171",
+      "success": "34d399",
+      "love": "f87171"
+    }
+  }
+}

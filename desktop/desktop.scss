@@ -1,0 +1,19 @@
+// === Desktop-specific refinements ===
+
+// Slightly wider max width
+:root {
+  --d-max-width: 1100px;
+}
+
+// Category boxes: card-style
+.category-list .category,
+.category-boxes .category-box {
+  border-radius: var(--eu-radius);
+  border: 1px solid var(--eu-border);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: var(--eu-border-hover);
+    box-shadow: var(--eu-shadow-sm);
+  }
+}

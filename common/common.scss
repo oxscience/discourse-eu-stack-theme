@@ -92,12 +92,26 @@
 // Gradient fills applied via inline SVG <defs> in head_tag.html
 // and JS that maps category → gradient ID.
 
-.category-boxes .category-box-heading .badge-category.--style-icon > svg.d-icon {
-  width: 2.5em;
-  height: 2.5em;
-  display: block;
+// Original icon: hidden when gradient version exists
+.category-boxes .category-box-heading svg.d-icon:not(.eu-gradient-icon) {
+  // Stays visible as fallback, hidden via JS when gradient clone exists
+}
+
+// Gradient icon clone: break inherited color/fill chain
+svg.eu-gradient-icon {
+  width: 2.5em !important;
+  height: 2.5em !important;
+  display: block !important;
   margin-bottom: 0.5em;
+  // Critical: prevent Horizon's inherited color from overriding gradient
+  color: transparent !important;
+  fill: transparent !important;
   transition: transform 0.2s ease, filter 0.2s ease;
+
+  path, circle, rect, polygon, polyline, line, ellipse {
+    // Let the parent <g fill="url(#...)"> control fill
+    fill: inherit !important;
+  }
 
   .category-box:hover & {
     transform: scale(1.08);

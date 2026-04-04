@@ -412,27 +412,37 @@ a,
 }
 
 // === Subcategory Pills — Gradient-Tint + larger touch targets ===
+// Pat chose "Gradient-Tint": category color as subtle gradient wash,
+// tinted text, colored border.
 
-.category-boxes .subcategory .badge-category {
-  font-size: 0.85em !important;
-  padding: 0.35em 0.65em !important;
+.category-boxes .subcategory .badge-category__wrapper {
+  padding: 0.35em 0.75em !important;
+  border-radius: var(--eu-radius-sm);
+  line-height: 1.4;
 
-  // Gradient-Tint: subtle wash of category color on dark/light base
+  // Gradient-Tint background
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--category-badge-color) 15%, var(--secondary)),
-    color-mix(in srgb, var(--category-badge-color) 5%, var(--secondary))
+    color-mix(in srgb, var(--category-badge-color) 15%, var(--eu-surface-1)),
+    var(--eu-surface-2)
   ) !important;
+
+  // Text tinted with category color
+  color: color-mix(in srgb, var(--category-badge-color) 60%, var(--primary)) !important;
+
+  // Border tinted with category color
   border: 1px solid color-mix(in srgb, var(--category-badge-color) 20%, transparent) !important;
+
   transition: all 0.15s ease;
 
   &:hover {
     background: linear-gradient(
       135deg,
-      color-mix(in srgb, var(--category-badge-color) 25%, var(--secondary)),
-      color-mix(in srgb, var(--category-badge-color) 12%, var(--secondary))
+      color-mix(in srgb, var(--category-badge-color) 25%, var(--eu-surface-1)),
+      color-mix(in srgb, var(--category-badge-color) 10%, var(--eu-surface-2))
     ) !important;
     border-color: color-mix(in srgb, var(--category-badge-color) 35%, transparent) !important;
+    color: color-mix(in srgb, var(--category-badge-color) 40%, var(--primary)) !important;
   }
 }
 

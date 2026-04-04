@@ -410,3 +410,65 @@ a,
     background-color: rgba(255, 255, 255, 0.15);
   }
 }
+
+// =============================================
+// SUBCATEGORY PILLS — Larger, responsive
+// =============================================
+
+.category-boxes .subcategories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4em;
+}
+
+.category-boxes .subcategory {
+  font-size: var(--font-0) !important; // bump from ~10px to base size
+
+  .badge-category__wrapper {
+    padding: 0.35em 0.7em !important;
+    border-radius: var(--eu-radius-sm);
+    font-size: var(--font-down-0-5) !important;
+    line-height: 1.4;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+
+    &:hover {
+      border-color: var(--eu-border-hover);
+    }
+  }
+}
+
+// Mobile: pills stack vertically, full width
+@media (max-width: 480px) {
+  .category-boxes .subcategories {
+    flex-direction: column;
+  }
+
+  .category-boxes .subcategory .badge-category__wrapper {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// =============================================
+// LMS "NÄCHSTE LEKTION" BUTTON — Truncate long titles
+// =============================================
+
+.lms-next-lesson {
+  max-width: 100%;
+}
+
+.lms-next-btn {
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-flex !important;
+  align-items: center;
+
+  // On narrow screens: allow wrapping instead
+  @media (max-width: 600px) {
+    white-space: normal;
+    max-width: 100%;
+    text-align: left;
+  }
+}

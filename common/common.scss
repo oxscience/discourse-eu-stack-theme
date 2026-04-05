@@ -197,14 +197,9 @@ html {
 
 .d-header-icons .icon {
   border-radius: var(--eu-radius-sm);
-  background: transparent !important;
 
-  &:hover {
-    background: var(--eu-surface-2) !important;
-
-    .d-icon {
-      color: var(--tertiary);
-    }
+  &:hover .d-icon {
+    color: var(--tertiary);
   }
 }
 
@@ -315,8 +310,7 @@ h1 {
   }
 }
 
-.btn-default,
-.btn-flat {
+.btn-default:not(.user-menu .btn-default):not(.d-header-icons .btn-default) {
   background-color: var(--eu-surface-2);
   border: 1px solid var(--eu-border);
 

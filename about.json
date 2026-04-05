@@ -9,7 +9,7 @@
   "theme_version": "1.0.0",
   "modifiers": {},
   "assets": {},
-  "icons": ["microchip"],
+  "icons": ["comment-dots"],
   "color_schemes": {
     "EU Stack Dark": {
       "primary": "e8e6e3",

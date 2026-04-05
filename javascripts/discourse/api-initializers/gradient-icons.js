@@ -90,4 +90,17 @@ export default apiInitializer("0.8", (api) => {
     setTimeout(applyGradientIcons, 300);
     setTimeout(applyGradientIcons, 1000);
   });
+
+  // Override AI bot header icons:
+  // "robot" → "wand-magic-sparkles" (open bot)
+  // "shuffle" → "arrow-left" (back to forum)
+  api.modifyClass("component:ai-bot-header-icon", {
+    pluginId: "eu-stack-ai-icons",
+    get icon() {
+      if (this.clickShouldRouteOutOfConversations) {
+        return "arrow-left";
+      }
+      return "wand-magic-sparkles";
+    },
+  });
 });

@@ -483,6 +483,6 @@ a,
 // Override to a neutral dark surface that fits the EU Stack Dark theme.
 
 .archetype-private_message .current-user-post .regular.contents {
-  background: var(--eu-surface-2);
-  border-color: var(--eu-border);
+  background: var(--eu-surface-2) !important;
+  border-color: var(--eu-border) !important;
 }

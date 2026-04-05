@@ -195,8 +195,12 @@ html {
   backdrop-filter: blur(12px);
 }
 
-.d-header-icons .icon {
+.d-header-icons .icon,
+.header-sidebar-toggle .btn {
   border-radius: var(--eu-radius-sm);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 
   &:hover .d-icon {
     color: var(--tertiary);

@@ -477,3 +477,12 @@ a,
     text-align: left;
   }
 }
+
+// === AI Bot — User Message Bubble ===
+// Discourse default uses --tertiary-very-low (blue) for current-user PM posts.
+// Override to a neutral dark surface that fits the EU Stack Dark theme.
+
+.archetype-private_message .current-user-post .regular.contents {
+  background: var(--eu-surface-2);
+  border-color: var(--eu-border);
+}

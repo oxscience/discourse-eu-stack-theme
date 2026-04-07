@@ -491,11 +491,11 @@ a,
 
 // User Menu: nur Benachrichtigungen + Profil anzeigen
 .user-menu .tabs-list {
-  .btn[data-tab-id="replies"],
-  .btn[data-tab-id="messages"],
-  .btn[data-tab-id="bookmarks"],
-  .btn[data-tab-id="chat-notifications"],
-  .btn[data-tab-id="review-queue"] {
+  #user-menu-button-replies,
+  #user-menu-button-likes,
+  #user-menu-button-messages,
+  #user-menu-button-bookmarks,
+  #user-menu-button-other-notifications {
     display: none !important;
   }
 }

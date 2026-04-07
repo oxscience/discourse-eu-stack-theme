@@ -486,3 +486,26 @@ a,
   background: var(--eu-surface-2) !important;
   border-color: var(--eu-border) !important;
 }
+
+// === OX Campus Anpassungen ===
+
+// User Menu: nur Benachrichtigungen + Profil anzeigen
+.user-menu .tabs-list {
+  .btn[data-tab-id="replies"],
+  .btn[data-tab-id="messages"],
+  .btn[data-tab-id="bookmarks"],
+  .btn[data-tab-id="chat-notifications"],
+  .btn[data-tab-id="review-queue"] {
+    display: none !important;
+  }
+}
+
+// Sidebar: Community Section komplett verstecken
+.sidebar-section[data-section-name="community"] {
+  display: none !important;
+}
+
+// Fliesstext etwas kleiner fuer bessere Hierarchie
+.cooked {
+  font-size: 0.95em;
+}

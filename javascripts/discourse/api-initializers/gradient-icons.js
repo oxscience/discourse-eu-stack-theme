@@ -100,7 +100,7 @@ export default apiInitializer("0.8", (api) => {
       if (this.clickShouldRouteOutOfConversations) {
         return "arrow-left";
       }
-      return "comment-dots";
+      return "robot";
     },
   });
 });

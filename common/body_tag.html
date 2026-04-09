@@ -1,41 +1,36 @@
 <script>
 (function() {
-  function addUpgradeButton() {
+  function fix404() {
     var homeBtn = document.querySelector('.page-not-found .btn, .not-found-container .btn, a[href="/"].btn');
     if (!homeBtn || document.querySelector('.ox-upgrade-btn')) return;
 
-    // Make home button outline-only
-    homeBtn.style.cssText += ';background:transparent !important;border:1px solid rgba(255,255,255,0.3) !important;';
-
-    // Create upgrade button (filled, same style as original home button)
+    // Add upgrade button right after home button
     var upgradeBtn = document.createElement('a');
     upgradeBtn.href = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
     upgradeBtn.className = homeBtn.className + ' ox-upgrade-btn';
     upgradeBtn.innerHTML = 'Upgraden \u2192';
-    upgradeBtn.style.marginLeft = '8px';
-    homeBtn.parentNode.insertBefore(upgradeBtn, homeBtn.nextSibling);
+    homeBtn.after(upgradeBtn);
 
-    // Change 404 text
-    var headline = document.querySelector('.page-not-found h1, .not-found-container h1');
-    if (headline && headline.textContent.includes('existiert nicht')) {
-      headline.textContent = 'Hoppla! Diese Seite existiert nicht oder ist nicht freigeschaltet.';
-    }
-  }
-
-  var observer = new MutationObserver(function() {
-    if (document.querySelector('.page-not-found, .not-found-container')) {
-      addUpgradeButton();
-    }
-  });
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      observer.observe(document.body, { childList: true, subtree: true });
+    // Update headline text
+    var headlines = document.querySelectorAll('.page-not-found h1, .not-found-container h1, .page-not-found h2, .not-found-container h2');
+    headlines.forEach(function(h) {
+      if (h.textContent.includes('existiert nicht')) {
+        h.textContent = 'Hoppla! Diese Seite existiert nicht oder ist nicht freigeschaltet.';
+      }
     });
-  } else {
-    observer.observe(document.body, { childList: true, subtree: true });
   }
 
+  // Use Discourse's API if available, otherwise observe
+  if (window.require) {
+    try {
+      var api = window.require('discourse/lib/plugin-api');
+    } catch(e) {}
+  }
+
+  var observer = new MutationObserver(fix404);
+  document.addEventListener('DOMContentLoaded', function() {
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
   setTimeout(function() { observer.disconnect(); }, 15000);
 })();
 </script>

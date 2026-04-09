@@ -510,6 +510,33 @@ a,
   font-size: 0.95em;
 }
 
+// === 404 Page — Button layout ===
+
+.page-not-found .buttons,
+.not-found-container .buttons,
+.page-not-found p:has(.btn),
+.not-found-container p:has(.btn) {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+  flex-wrap: wrap;
+}
+
+// "Zurück zur Startseite" — outline style
+.page-not-found .btn:first-child,
+.not-found-container .btn:first-child {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: var(--primary) !important;
+  -webkit-text-fill-color: var(--primary) !important;
+}
+
+// "Upgraden" — filled style
+.ox-upgrade-btn {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+}
+
 // =============================================
 // LANDING PAGE — Only visible for anonymous users
 // =============================================

@@ -514,25 +514,12 @@ a,
 // LANDING PAGE — Only visible for anonymous users
 // =============================================
 
-// Hide the default login-required page content for anonymous users
-// The login-required page is rendered by Ember inside #main-outlet
-body.anon #main-outlet {
-  display: none !important;
-}
-
-// Also hide sidebar for anon (not needed on landing)
-body.anon .sidebar-wrapper {
-  display: none !important;
-}
-
-// Reclaim full width for the landing page
-body.anon #main-outlet-wrapper {
-  padding: 0;
-}
-
-// Show landing only when ox-landing exists (anon connector)
+// Landing page injected via head_tag.html JS for anonymous users
+// JS adds body.ox-landing-active class
 .ox-landing {
   width: 100%;
+  min-height: calc(100vh - 60px);
+  background: var(--secondary, #0f0f11);
 }
 
 // === Hero Section ===

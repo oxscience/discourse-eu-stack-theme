@@ -524,16 +524,10 @@ a,
   vertical-align: middle !important;
 }
 
-// Make both buttons same height
-a.btn.ox-upgrade-btn,
-.page-not-found a.btn,
-.not-found-container a.btn {
-  padding: 10px 18px !important;
-  height: auto !important;
-  line-height: 1.4 !important;
-  vertical-align: middle !important;
-  display: inline-flex !important;
-  align-items: center !important;
+// Make both buttons same size
+a.btn.ox-upgrade-btn {
+  padding: 14px 24px !important;
+  font-size: 1.15em !important;
 }
 
 // =============================================

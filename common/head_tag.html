@@ -1,7 +1,6 @@
 <script>
 (function() {
-  // Only run on login-required page for anonymous users
-  // Check: no Discourse current user + splash/login page visible
+  // Detect anonymous user via preloaded data
   function isAnonymous() {
     try {
       var preloaded = document.getElementById("data-preloaded");
@@ -10,22 +9,31 @@
         if (data.currentUser || data["current_user"]) return false;
       }
     } catch(e) {}
-    // Fallback: check meta tag
-    var csrf = document.querySelector('meta[name="csrf-token"]');
-    // If no preloaded user data found, assume anonymous
-    return !document.querySelector('.header-dropdown-toggle .current-user');
+    return true;
   }
 
-  function injectLanding() {
-    // Don't inject if already present
+  if (!isAnonymous()) return;
+
+  // --- Inject CSS immediately to prevent flash ---
+  var style = document.createElement('style');
+  style.id = 'ox-landing-styles';
+  style.textContent = [
+    // Hide splash screen
+    '#d-splash { display: none !important; }',
+    // Hide Discourse header on landing
+    'body.ox-landing-active .d-header-wrap { display: none !important; }',
+    // Hide main outlet
+    'body.ox-landing-active #main-outlet-wrapper { display: none !important; }',
+    'body.ox-landing-active .sidebar-wrapper { display: none !important; }',
+    // Prevent scroll issues
+    'body.ox-landing-active { overflow-x: hidden; }'
+  ].join('\n');
+  document.head.appendChild(style);
+
+  function showLanding() {
     if (document.querySelector('.ox-landing')) return;
 
-    // Find the splash screen or wait for the page to be ready
-    var target = document.getElementById('d-splash');
-    if (!target) {
-      target = document.querySelector('#main-outlet');
-    }
-    if (!target) return;
+    document.body.classList.add('ox-landing-active');
 
     var landing = document.createElement('div');
     landing.className = 'ox-landing';
@@ -33,11 +41,14 @@
       // Hero
       '<section class="ox-landing__hero">',
         '<div class="ox-landing__hero-inner">',
+          '<div class="ox-landing__logo">',
+            '<img src="', getSiteLogo(), '" alt="OX Campus" class="ox-landing__logo-img">',
+          '</div>',
           '<h1 class="ox-landing__title">Die Community f\u00fcr<br><span class="ox-landing__title-accent">Science, Education & Tech</span></h1>',
           '<p class="ox-landing__subtitle">Evidenzbasiertes Wissen, gemeinsam weitergedacht. Diskutiere mit Forschern, Dozenten und Tech-Enthusiasten \u2014 offen, unabh\u00e4ngig, werbefrei.</p>',
           '<div class="ox-landing__cta">',
-            '<a href="/signup" class="ox-landing__btn-primary">Kostenlos beitreten</a>',
-            '<a href="/login" class="ox-landing__btn-secondary">Anmelden</a>',
+            '<button class="ox-landing__btn-primary" data-action="signup">Kostenlos beitreten</button>',
+            '<button class="ox-landing__btn-secondary" data-action="login">Anmelden</button>',
           '</div>',
         '</div>',
       '</section>',
@@ -45,17 +56,17 @@
       '<section class="ox-landing__features">',
         '<div class="ox-landing__features-grid">',
           '<div class="ox-landing__feature-card">',
-            '<div class="ox-landing__feature-icon"><svg class="d-icon" viewBox="0 0 448 512"><path fill="currentColor" d="M288 0H160 128C110.3 0 96 14.3 96 32s14.3 32 32 32l0 132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6C0 480.9 31.1 512 69.4 512l309.2 0c38.3 0 69.4-31.1 69.4-69.4c0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5L320 64c17.7 0 32-14.3 32-32s-14.3-32-32-32H288zM192 196.8L192 64h64l0 132.8c0 23.7 6.6 46.9 19 67.1L309.5 320h-171L173 263.9c12.4-20.2 19-43.4 19-67.1z"/></svg></div>',
+            '<div class="ox-landing__feature-icon"><svg viewBox="0 0 448 512" width="24" height="24"><path fill="currentColor" d="M288 0H160 128C110.3 0 96 14.3 96 32s14.3 32 32 32l0 132.8c0 11.8-3.3 23.5-9.5 33.5L10.3 406.2C3.6 417.2 0 429.7 0 442.6C0 480.9 31.1 512 69.4 512l309.2 0c38.3 0 69.4-31.1 69.4-69.4c0-12.8-3.6-25.4-10.3-36.4L329.5 230.4c-6.2-10.1-9.5-21.7-9.5-33.5L320 64c17.7 0 32-14.3 32-32s-14.3-32-32-32H288zM192 196.8L192 64h64l0 132.8c0 23.7 6.6 46.9 19 67.1L309.5 320h-171L173 263.9c12.4-20.2 19-43.4 19-67.1z"/></svg></div>',
             '<h3>Science</h3>',
             '<p>Trainingswissenschaft, Ern\u00e4hrung, Genetik \u2014 fundiert diskutiert statt Bro-Science.</p>',
           '</div>',
           '<div class="ox-landing__feature-card">',
-            '<div class="ox-landing__feature-icon"><svg class="d-icon" viewBox="0 0 640 512"><path fill="currentColor" d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9l0 28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c5.6 1.4 11.6-.2 15.5-4.6c8-8.8 13.7-19.1 18-29c3.5-7.8 6.6-16.2 9.3-24.4c5.6 2.2 11.5 3.8 17.7 4.5C155 456 180.2 480 224 480H416c43.8 0 69-24 87.4-44c12.8-14 28.1-24.5 44.6-32c16.5-7.6 32.9-12.6 46.4-15.5c8-1.7 14.4-7.1 17-14.4s.9-15.3-4.5-21.1c-10.2-10.8-20.3-26.2-28.8-43.8C566.8 288.2 560 265.6 560 240V160c0-10.1-6.3-19.1-15.8-22.6L263.7 36.1C256.1 33.4 248.1 32 320 32z"/></svg></div>',
+            '<div class="ox-landing__feature-icon"><svg viewBox="0 0 640 512" width="24" height="24"><path fill="currentColor" d="M320 32c-8.1 0-16.1 1.4-23.7 4.1L15.8 137.4C6.3 140.9 0 149.9 0 160s6.3 19.1 15.8 22.6l57.9 20.9C57.3 229.3 48 259.8 48 291.9l0 28.1c0 28.4-10.8 57.7-22.3 80.8c-6.5 13-13.9 25.8-22.5 37.6C0 442.7-.9 448.3 .9 453.4s6 8.9 11.2 10.2l64 16c5.6 1.4 11.6-.2 15.5-4.6c8-8.8 13.7-19.1 18-29c3.5-7.8 6.6-16.2 9.3-24.4c5.6 2.2 11.5 3.8 17.7 4.5C155 456 180.2 480 224 480H416c43.8 0 69-24 87.4-44c12.8-14 28.1-24.5 44.6-32c16.5-7.6 32.9-12.6 46.4-15.5c8-1.7 14.4-7.1 17-14.4s.9-15.3-4.5-21.1c-10.2-10.8-20.3-26.2-28.8-43.8C566.8 288.2 560 265.6 560 240V160c0-10.1-6.3-19.1-15.8-22.6L263.7 36.1C256.1 33.4 248.1 32 320 32z"/></svg></div>',
             '<h3>Education</h3>',
             '<p>Kurse, Symposien und Ressourcen f\u00fcr Lehrende, Studierende und lebenslanges Lernen.</p>',
           '</div>',
           '<div class="ox-landing__feature-card">',
-            '<div class="ox-landing__feature-icon"><svg class="d-icon" viewBox="0 0 640 512"><path fill="currentColor" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></div>',
+            '<div class="ox-landing__feature-icon"><svg viewBox="0 0 640 512" width="24" height="24"><path fill="currentColor" d="M392.8 1.2c-17-4.9-34.7 5-39.6 22l-128 448c-4.9 17 5 34.7 22 39.6s34.7-5 39.6-22l128-448c4.9-17-5-34.7-22-39.6zm80.6 120.1c-12.5 12.5-12.5 32.8 0 45.3L562.7 256l-89.4 89.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l112-112c12.5-12.5 12.5-32.8 0-45.3l-112-112c-12.5-12.5-32.8-12.5-45.3 0zm-306.7 0c-12.5-12.5-32.8-12.5-45.3 0l-112 112c-12.5 12.5-12.5 32.8 0 45.3l112 112c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256l89.4-89.4c12.5-12.5 12.5-32.8 0-45.3z"/></svg></div>',
             '<h3>Tech & KI</h3>',
             '<p>Tools, Workflows und KI-Anwendungen \u2014 von Praktikern f\u00fcr Praktiker.</p>',
           '</div>',
@@ -82,57 +93,92 @@
       '</section>'
     ].join('');
 
-    // Hide the splash screen and inject landing
-    if (target.id === 'd-splash') {
-      target.style.display = 'none';
-      document.body.appendChild(landing);
-    } else {
-      target.innerHTML = '';
-      target.appendChild(landing);
-    }
+    document.body.appendChild(landing);
 
-    // Add body class for CSS targeting
-    document.body.classList.add('ox-landing-active');
-  }
+    // --- Button click handlers ---
+    landing.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-action]');
+      if (!btn) return;
 
-  // Run when DOM is ready and also observe for Ember changes
-  function tryInject() {
-    if (!isAnonymous()) return;
+      e.preventDefault();
+      e.stopPropagation();
 
-    // Hide the default splash content immediately
-    var style = document.createElement('style');
-    style.textContent = [
-      'body.ox-landing-active #d-splash { display: none !important; }',
-      'body.ox-landing-active .login-welcome { display: none !important; }',
-      'body.ox-landing-active #main-outlet > *:not(.ox-landing) { display: none !important; }',
-      'body.ox-landing-active .sidebar-wrapper { display: none !important; }'
-    ].join('\n');
-    document.head.appendChild(style);
+      var action = btn.dataset.action;
 
-    injectLanding();
+      // Remove landing page and restore Discourse
+      hideLanding();
 
-    // Also try after Ember finishes rendering
-    var observer = new MutationObserver(function(mutations) {
-      if (document.querySelector('.login-welcome') || document.querySelector('#simple-container')) {
-        injectLanding();
-        // Re-hide after Ember re-renders
-        var loginWelcome = document.querySelector('.login-welcome');
-        if (loginWelcome) loginWelcome.style.display = 'none';
-        var simpleContainer = document.querySelector('#simple-container');
-        if (simpleContainer) simpleContainer.style.display = 'none';
-      }
+      // Wait for Discourse to be ready, then trigger modal
+      waitForDiscourse(function() {
+        if (action === 'signup') {
+          // Try header signup button first
+          var signupBtn = document.querySelector('.sign-up-button, .btn-primary.btn-small[href="/signup"], button.sign-up-button');
+          if (signupBtn) {
+            signupBtn.click();
+          } else {
+            // Fallback: navigate directly
+            window.location.href = '/signup';
+          }
+        } else if (action === 'login') {
+          var loginBtn = document.querySelector('.login-button, button.login-button, .btn-primary.btn-small[href="/login"]');
+          if (loginBtn) {
+            loginBtn.click();
+          } else {
+            window.location.href = '/login';
+          }
+        }
+      });
     });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // Stop observing after 10 seconds
-    setTimeout(function() { observer.disconnect(); }, 10000);
   }
 
+  function hideLanding() {
+    document.body.classList.remove('ox-landing-active');
+    var landing = document.querySelector('.ox-landing');
+    if (landing) landing.remove();
+    // Re-show Discourse UI
+    var styleEl = document.getElementById('ox-landing-styles');
+    if (styleEl) styleEl.remove();
+  }
+
+  function waitForDiscourse(callback) {
+    var attempts = 0;
+    var interval = setInterval(function() {
+      attempts++;
+      // Check if Discourse header buttons are available
+      var hasButtons = document.querySelector('.login-button, .sign-up-button');
+      var emberReady = document.querySelector('#main-outlet');
+      if (hasButtons || emberReady || attempts > 50) {
+        clearInterval(interval);
+        // Small extra delay for Ember to finish rendering
+        setTimeout(callback, 200);
+      }
+    }, 100);
+  }
+
+  function getSiteLogo() {
+    // Try to get logo from meta or preloaded data
+    try {
+      var preloaded = document.getElementById("data-preloaded");
+      if (preloaded) {
+        var data = JSON.parse(preloaded.dataset.preloaded);
+        var siteSettings = data["customHTML"] || "";
+        // Check for logo in head
+        var logoMeta = document.querySelector('meta[name="discourse-logo-url"]');
+        if (logoMeta) return logoMeta.content;
+      }
+    } catch(e) {}
+    // Try to find logo in header
+    var headerLogo = document.querySelector('.title-wrapper img, #site-logo');
+    if (headerLogo) return headerLogo.src;
+    // Fallback
+    return '/uploads/default/original/1X/logo.png';
+  }
+
+  // --- Init ---
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', tryInject);
+    document.addEventListener('DOMContentLoaded', showLanding);
   } else {
-    tryInject();
+    showLanding();
   }
 })();
 </script>

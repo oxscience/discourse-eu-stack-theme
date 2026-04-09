@@ -510,24 +510,49 @@ a,
   font-size: 0.95em;
 }
 
-// === 404 Page — Button layout ===
+// === 404 Page — Buttons ===
 
-// Force the button's parent to be a flex row
-.btn.ox-upgrade-btn {
+// Hide original button, we rebuild both in JS
+.page-not-found a.btn[href="/"],
+.not-found-container a.btn[href="/"] {
+  display: none !important;
+}
+
+.ox-404-buttons {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 16px !important;
+  margin-top: 20px !important;
+}
+
+.ox-404-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  padding: 14px 28px !important;
+  border-radius: 8px !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  font-family: inherit !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  line-height: 1.4 !important;
+}
+
+.ox-404-btn--home {
+  background: var(--tertiary) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff !important;
+  border: none !important;
+}
+
+.ox-404-btn--upgrade {
   background: #111 !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
   border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  font-size: 1em !important;
-  font-weight: 700 !important;
-  margin-left: 16px !important;
-  vertical-align: middle !important;
-}
-
-// Make both buttons same size
-a.btn.ox-upgrade-btn {
-  padding: 14px 24px !important;
-  font-size: 1.15em !important;
 }
 
 // =============================================

@@ -1,30 +1,28 @@
 <script>
 (function() {
   function fix404() {
-    var homeBtn = document.querySelector('.page-not-found .btn, .not-found-container .btn, a[href="/"].btn');
-    if (!homeBtn || document.querySelector('.ox-upgrade-btn')) return;
+    if (document.querySelector('.ox-404-buttons')) return;
+    var container = document.querySelector('.page-not-found, .not-found-container');
+    if (!container) return;
 
-    // Add upgrade button right after home button
-    var upgradeBtn = document.createElement('a');
-    upgradeBtn.href = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
-    upgradeBtn.className = homeBtn.className + ' ox-upgrade-btn';
-    upgradeBtn.innerHTML = 'Upgraden \u2192';
-    homeBtn.after(upgradeBtn);
+    // Find the original button to insert after
+    var originalBtn = container.querySelector('a.btn[href="/"]');
+    if (!originalBtn) return;
+
+    // Build our own button row
+    var row = document.createElement('div');
+    row.className = 'ox-404-buttons';
+    row.innerHTML = '<a href="/" class="ox-404-btn ox-404-btn--home">\u{1F3E0} Zur\u00fcck zur Startseite</a><a href="https://outoftheb-ox.de/pages/oxcampus#ox-pricing" class="ox-404-btn ox-404-btn--upgrade">Upgraden \u2192</a>';
+
+    originalBtn.parentNode.insertBefore(row, originalBtn);
 
     // Update headline text
-    var headlines = document.querySelectorAll('.page-not-found h1, .not-found-container h1, .page-not-found h2, .not-found-container h2');
+    var headlines = container.querySelectorAll('h1, h2');
     headlines.forEach(function(h) {
       if (h.textContent.includes('existiert nicht')) {
         h.textContent = 'Hoppla! Diese Seite existiert nicht oder ist nicht freigeschaltet.';
       }
     });
-  }
-
-  // Use Discourse's API if available, otherwise observe
-  if (window.require) {
-    try {
-      var api = window.require('discourse/lib/plugin-api');
-    } catch(e) {}
   }
 
   var observer = new MutationObserver(fix404);

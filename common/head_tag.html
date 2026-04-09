@@ -12,9 +12,20 @@
 
   if (!isAnonymous()) return;
 
-  // Only show landing on root path
   var isRootPath = (window.location.pathname === '/' || window.location.pathname === '');
-  if (!isRootPath) return;
+
+  // On non-root pages (signup, login): intercept logo click to force full reload
+  if (!isRootPath) {
+    document.addEventListener('click', function(e) {
+      var logo = e.target.closest('#site-logo, .logo-big, .title-wrapper a, a.home-logo-wrapper-url');
+      if (logo) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = '/';
+      }
+    }, true);
+    return;
+  }
 
   // Logo URL (from Discourse uploads)
   var LOGO_URL = "https://cdck-file-uploads-europe1.s3.dualstack.eu-west-1.amazonaws.com/flex018/uploads/ox1/original/1X/cb887c375bffea26433405ea314b2def884dedc8.png";

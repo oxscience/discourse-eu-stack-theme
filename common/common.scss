@@ -509,3 +509,249 @@ a,
 .cooked {
   font-size: 0.95em;
 }
+
+// =============================================
+// LANDING PAGE — Only visible for anonymous users
+// =============================================
+
+// Hide the default login-required page content for anonymous users
+// The login-required page is rendered by Ember inside #main-outlet
+body.anon #main-outlet {
+  display: none !important;
+}
+
+// Also hide sidebar for anon (not needed on landing)
+body.anon .sidebar-wrapper {
+  display: none !important;
+}
+
+// Reclaim full width for the landing page
+body.anon #main-outlet-wrapper {
+  padding: 0;
+}
+
+// Show landing only when ox-landing exists (anon connector)
+.ox-landing {
+  width: 100%;
+}
+
+// === Hero Section ===
+
+.ox-landing__hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 4rem 2rem 3rem;
+  text-align: center;
+  position: relative;
+
+  // Subtle radial glow behind hero
+  &::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(109, 140, 255, 0.08) 0%,
+      rgba(167, 139, 250, 0.04) 40%,
+      transparent 70%
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+.ox-landing__hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+.ox-landing__title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--primary);
+  margin-bottom: 1.25rem;
+
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+  }
+}
+
+.ox-landing__title-accent {
+  @include gradient-text;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.ox-landing__subtitle {
+  font-size: 1.15rem;
+  line-height: 1.65;
+  color: var(--primary-medium);
+  max-width: 560px;
+  margin: 0 auto 2rem;
+
+  @media (max-width: 600px) {
+    font-size: 1rem;
+  }
+}
+
+.ox-landing__cta {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.ox-landing__btn-primary {
+  padding: 0.7em 2em !important;
+  font-size: 1.05rem !important;
+  font-weight: 700 !important;
+  border-radius: var(--eu-radius) !important;
+  box-shadow: 0 4px 20px rgba(109, 140, 255, 0.25);
+
+  &:hover {
+    box-shadow: 0 6px 28px rgba(109, 140, 255, 0.35) !important;
+    transform: translateY(-1px);
+  }
+
+  transition: all 0.2s ease !important;
+}
+
+.ox-landing__btn-secondary {
+  padding: 0.7em 2em !important;
+  font-size: 1.05rem !important;
+  border-radius: var(--eu-radius) !important;
+}
+
+// === Features Section ===
+
+.ox-landing__features {
+  padding: 2rem 2rem 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ox-landing__features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
+.ox-landing__feature-card {
+  background: var(--eu-surface-1);
+  border: 1px solid var(--eu-border);
+  border-radius: var(--eu-radius-lg);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: all 0.2s ease;
+
+  &:hover {
+    border-color: var(--eu-border-hover);
+    box-shadow: var(--eu-shadow-md);
+    transform: translateY(-2px);
+  }
+
+  h3 {
+    @include gradient-text(var(--eu-gradient-subtle));
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0.75rem 0 0.5rem;
+  }
+
+  p {
+    color: var(--primary-medium);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0;
+  }
+}
+
+.ox-landing__feature-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: linear-gradient(
+    135deg,
+    rgba(109, 140, 255, 0.15),
+    rgba(167, 139, 250, 0.1)
+  );
+
+  .d-icon {
+    font-size: 1.3rem;
+    color: var(--tertiary);
+  }
+}
+
+// === Social Proof Section ===
+
+.ox-landing__proof {
+  padding: 2rem 2rem 4rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.ox-landing__proof-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  background: var(--eu-surface-1);
+  border: 1px solid var(--eu-border);
+  border-radius: var(--eu-radius-lg);
+  padding: 1.5rem 2rem;
+
+  @media (max-width: 500px) {
+    gap: 1rem;
+    padding: 1.25rem 1rem;
+  }
+}
+
+.ox-landing__proof-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  flex: 1;
+}
+
+.ox-landing__proof-number {
+  @include gradient-text;
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 500px) {
+    font-size: 1.2rem;
+  }
+}
+
+.ox-landing__proof-label {
+  color: var(--primary-medium);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.25rem;
+}
+
+.ox-landing__proof-divider {
+  width: 1px;
+  height: 40px;
+  background: var(--eu-border);
+}

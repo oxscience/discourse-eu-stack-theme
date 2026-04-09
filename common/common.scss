@@ -512,33 +512,26 @@ a,
 
 // === 404 Page — Button layout ===
 
-.page-not-found .buttons,
-.not-found-container .buttons,
-.page-not-found p:has(.btn),
-.not-found-container p:has(.btn) {
-  display: flex !important;
-  align-items: stretch !important;
-  justify-content: center !important;
-  gap: 16px !important;
-  flex-wrap: wrap;
-}
-
-// "Zurück zur Startseite" — keep original style
-.page-not-found .btn:first-child,
-.not-found-container .btn:first-child {
-  color: var(--primary) !important;
-  -webkit-text-fill-color: var(--primary) !important;
-}
-
-// "Upgraden" — black bg, white text, big
-.ox-upgrade-btn {
-  background: #000 !important;
+// Force the button's parent to be a flex row
+.btn.ox-upgrade-btn {
+  background: #111 !important;
   color: #fff !important;
   -webkit-text-fill-color: #fff !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  font-size: 1.1em !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  font-size: 1em !important;
   font-weight: 700 !important;
-  padding: 12px 24px !important;
+  margin-left: 16px !important;
+  vertical-align: middle !important;
+}
+
+// Make both buttons same height
+a.btn.ox-upgrade-btn,
+.page-not-found a.btn,
+.not-found-container a.btn {
+  padding: 10px 18px !important;
+  height: auto !important;
+  line-height: 1.4 !important;
+  vertical-align: middle !important;
   display: inline-flex !important;
   align-items: center !important;
 }

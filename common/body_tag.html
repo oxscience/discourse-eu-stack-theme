@@ -4,18 +4,15 @@
     var homeBtn = document.querySelector('.page-not-found .btn, .not-found-container .btn, a[href="/"].btn');
     if (!homeBtn || document.querySelector('.ox-upgrade-btn')) return;
 
-    // Fix alignment: make parent flex
-    homeBtn.parentNode.style.display = 'inline-flex';
-    homeBtn.parentNode.style.alignItems = 'center';
-    homeBtn.parentNode.style.gap = '10px';
+    // Make home button outline-only
+    homeBtn.style.cssText += ';background:transparent !important;border:1px solid rgba(255,255,255,0.3) !important;';
 
+    // Create upgrade button (filled, same style as original home button)
     var upgradeBtn = document.createElement('a');
     upgradeBtn.href = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
-    upgradeBtn.className = 'ox-upgrade-btn';
+    upgradeBtn.className = homeBtn.className + ' ox-upgrade-btn';
     upgradeBtn.innerHTML = 'Upgraden \u2192';
-    upgradeBtn.style.cssText = 'display:inline-flex;align-items:center;padding:10px 20px;border-radius:6px;border:1px solid rgba(255,255,255,0.25);background:transparent;color:#e8e6e3;font-size:inherit;font-weight:600;text-decoration:none;transition:all 0.2s ease;';
-    upgradeBtn.onmouseenter = function() { this.style.borderColor = 'rgba(109,140,255,0.5)'; this.style.color = '#6d8cff'; };
-    upgradeBtn.onmouseleave = function() { this.style.borderColor = 'rgba(255,255,255,0.25)'; this.style.color = '#e8e6e3'; };
+    upgradeBtn.style.marginLeft = '8px';
     homeBtn.parentNode.insertBefore(upgradeBtn, homeBtn.nextSibling);
 
     // Change 404 text

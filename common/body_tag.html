@@ -1,24 +1,38 @@
 <script>
 (function() {
   function fix404() {
-    if (document.querySelector('.ox-404-buttons')) return;
-    var container = document.querySelector('.page-not-found, .not-found-container');
-    if (!container) return;
+    if (document.querySelector('.ox-upgrade-btn')) return;
 
-    // Find the original button to insert after
-    var originalBtn = container.querySelector('a.btn[href="/"]');
-    if (!originalBtn) return;
+    // Find ANY button on the 404 page
+    var btn = document.querySelector('a.btn[href="/"]') ||
+              document.querySelector('.page-not-found .btn') ||
+              document.querySelector('.not-found-container .btn');
+    if (!btn) return;
 
-    // Build our own button row
-    var row = document.createElement('div');
-    row.className = 'ox-404-buttons';
-    row.innerHTML = '<a href="/" class="ox-404-btn ox-404-btn--home">\u{1F3E0} Zur\u00fcck zur Startseite</a><a href="https://outoftheb-ox.de/pages/oxcampus#ox-pricing" class="ox-404-btn ox-404-btn--upgrade">Upgraden \u2192</a>';
+    // Copy computed styles from the original button
+    var cs = window.getComputedStyle(btn);
 
-    originalBtn.parentNode.insertBefore(row, originalBtn);
+    // Create upgrade button with exact same dimensions
+    var upgrade = document.createElement('a');
+    upgrade.href = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
+    upgrade.className = 'ox-upgrade-btn';
+    upgrade.textContent = 'Upgraden \u2192';
+    upgrade.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;' +
+      'padding:' + cs.paddingTop + ' ' + cs.paddingRight + ' ' + cs.paddingBottom + ' ' + cs.paddingLeft + ';' +
+      'font-size:' + cs.fontSize + ';font-weight:' + cs.fontWeight + ';font-family:' + cs.fontFamily + ';' +
+      'line-height:' + cs.lineHeight + ';height:' + cs.height + ';' +
+      'border-radius:' + cs.borderRadius + ';' +
+      'background:#111;color:#fff;border:1px solid rgba(255,255,255,0.25);' +
+      'text-decoration:none;margin-left:16px;vertical-align:middle;box-sizing:border-box;';
 
-    // Update headline text
-    var headlines = container.querySelectorAll('h1, h2');
-    headlines.forEach(function(h) {
+    btn.style.verticalAlign = 'middle';
+    btn.style.display = 'inline-flex';
+    btn.style.alignItems = 'center';
+    btn.after(upgrade);
+
+    // Update headline
+    var parent = btn.closest('.page-not-found, .not-found-container') || document.body;
+    parent.querySelectorAll('h1, h2').forEach(function(h) {
       if (h.textContent.includes('existiert nicht')) {
         h.textContent = 'Hoppla! Diese Seite existiert nicht oder ist nicht freigeschaltet.';
       }

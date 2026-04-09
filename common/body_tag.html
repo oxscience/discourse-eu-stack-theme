@@ -3,32 +3,21 @@
   function fix404() {
     if (document.querySelector('.ox-upgrade-btn')) return;
 
-    // Find ANY button on the 404 page
     var btn = document.querySelector('a.btn[href="/"]') ||
               document.querySelector('.page-not-found .btn') ||
               document.querySelector('.not-found-container .btn');
     if (!btn) return;
 
-    // Copy computed styles from the original button
-    var cs = window.getComputedStyle(btn);
+    var wrapper = document.createElement('div');
+    wrapper.style.cssText = 'text-align:center;margin-top:24px;';
 
-    // Create upgrade button with exact same dimensions
     var upgrade = document.createElement('a');
     upgrade.href = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
-    upgrade.className = 'ox-upgrade-btn';
+    upgrade.className = btn.className + ' ox-upgrade-btn';
     upgrade.textContent = 'Upgraden \u2192';
-    upgrade.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;' +
-      'padding:' + cs.paddingTop + ' ' + cs.paddingRight + ' ' + cs.paddingBottom + ' ' + cs.paddingLeft + ';' +
-      'font-size:' + cs.fontSize + ';font-weight:' + cs.fontWeight + ';font-family:' + cs.fontFamily + ';' +
-      'line-height:' + cs.lineHeight + ';height:' + cs.height + ';' +
-      'border-radius:' + cs.borderRadius + ';' +
-      'background:#111;color:#fff;border:1px solid rgba(255,255,255,0.25);' +
-      'text-decoration:none;margin-left:16px;vertical-align:middle;box-sizing:border-box;';
 
-    btn.style.verticalAlign = 'middle';
-    btn.style.display = 'inline-flex';
-    btn.style.alignItems = 'center';
-    btn.after(upgrade);
+    wrapper.appendChild(upgrade);
+    btn.parentNode.insertBefore(wrapper, btn.nextSibling);
 
     // Update headline
     var parent = btn.closest('.page-not-found, .not-found-container') || document.body;

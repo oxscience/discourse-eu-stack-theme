@@ -778,3 +778,113 @@ a,
   height: 40px;
   background: rgba(255, 255, 255, 0.06);
 }
+
+// =============================================
+// FLOATING AI ASSISTANT BUTTON
+// =============================================
+
+.ox-ai-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--eu-surface-2);
+  box-shadow: var(--eu-shadow-lg), 0 0 0 1px var(--eu-border);
+  transition: all 0.25s ease;
+  animation: ox-ai-fab-in 0.4s ease-out;
+
+  // Gradient glow ring
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: 50%;
+    background: var(--eu-gradient);
+    z-index: -1;
+    opacity: 0.5;
+    transition: opacity 0.25s ease;
+  }
+
+  &:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: var(--eu-shadow-lg), 0 0 24px rgba(109, 140, 255, 0.2);
+
+    &::before {
+      opacity: 0.9;
+    }
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  .d-icon {
+    color: var(--tertiary);
+    font-size: 1.3rem;
+    transition: color 0.2s ease;
+  }
+
+  &:hover .d-icon {
+    color: #fff;
+  }
+
+  // Hide when AI bot full-page is open (user is already chatting)
+  .archetype-private_message & {
+    display: none;
+  }
+
+  // Mobile: smaller, tighter to edge
+  @media (max-width: 600px) {
+    bottom: 1rem;
+    right: 1rem;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+// Tooltip
+.ox-ai-fab__tooltip {
+  position: absolute;
+  right: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--eu-surface-1);
+  color: var(--primary);
+  border: 1px solid var(--eu-border);
+  border-radius: var(--eu-radius-sm);
+  padding: 0.4em 0.75em;
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease;
+  box-shadow: var(--eu-shadow-md);
+
+  .ox-ai-fab:hover & {
+    opacity: 1;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+@keyframes ox-ai-fab-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}

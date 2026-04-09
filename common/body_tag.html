@@ -1,0 +1,34 @@
+<script>
+(function() {
+  // Add "Upgraden" button next to "Zurück zur Startseite" on 404 pages
+  function addUpgradeButton() {
+    var homeBtn = document.querySelector('.page-not-found .btn, .not-found-container .btn, a[href="/"].btn');
+    if (!homeBtn || document.querySelector('.ox-upgrade-btn')) return;
+
+    var upgradeBtn = document.createElement('a');
+    upgradeBtn.href = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
+    upgradeBtn.className = homeBtn.className + ' ox-upgrade-btn';
+    upgradeBtn.innerHTML = 'Upgraden \u2192';
+    upgradeBtn.style.marginLeft = '8px';
+    homeBtn.parentNode.insertBefore(upgradeBtn, homeBtn.nextSibling);
+  }
+
+  // Observe DOM for Discourse's dynamic rendering
+  var observer = new MutationObserver(function() {
+    if (document.querySelector('.page-not-found, .not-found-container')) {
+      addUpgradeButton();
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      observer.observe(document.body, { childList: true, subtree: true });
+    });
+  } else {
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  // Stop after 15 seconds
+  setTimeout(function() { observer.disconnect(); }, 15000);
+})();
+</script>

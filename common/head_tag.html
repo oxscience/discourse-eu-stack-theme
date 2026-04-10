@@ -12,20 +12,27 @@
 
   if (!isAnonymous()) return;
 
+  var PRICING_URL = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
   var isRootPath = (window.location.pathname === '/' || window.location.pathname === '');
 
-  // On non-root pages (signup, login): intercept logo click to force full reload
-  if (!isRootPath) {
-    document.addEventListener('click', function(e) {
-      var logo = e.target.closest('#site-logo, .logo-big, .title-wrapper a, a.home-logo-wrapper-url');
-      if (logo) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.location.href = '/';
-      }
-    }, true);
+  // Redirect logo clicks on ALL anon pages to Shopify pricing
+  document.addEventListener('click', function(e) {
+    var logo = e.target.closest('#site-logo, .logo-big, .title-wrapper a, a.home-logo-wrapper-url');
+    if (logo) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.href = PRICING_URL;
+    }
+  }, true);
+
+  // On root path: redirect anon users directly to Shopify pricing
+  if (isRootPath) {
+    window.location.replace(PRICING_URL);
     return;
   }
+
+  // On signup/login pages: no landing page injection needed
+  return;
 
   // Logo URL (from Discourse uploads)
   var LOGO_URL = "https://cdck-file-uploads-europe1.s3.dualstack.eu-west-1.amazonaws.com/flex018/uploads/ox1/original/1X/cb887c375bffea26433405ea314b2def884dedc8.png";

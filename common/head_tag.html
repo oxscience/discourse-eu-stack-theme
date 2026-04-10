@@ -27,6 +27,10 @@
 
   // On root path: redirect anon users directly to Shopify pricing
   if (isRootPath) {
+    // Hide everything to prevent flash before redirect
+    var hideAll = document.createElement('style');
+    hideAll.textContent = 'html { visibility: hidden !important; background: #0f0f11 !important; } #d-splash { display: none !important; }';
+    (document.head || document.documentElement).appendChild(hideAll);
     window.location.replace(PRICING_URL);
     return;
   }

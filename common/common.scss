@@ -4,6 +4,20 @@
 //
 // All partials inlined — Discourse theme components don't support @import
 
+// --- Lucide icon fix ------------------------------------------------------
+// Discourse's default CSS applies `fill: currentColor` to every .d-icon,
+// which overrides Lucide's inline `fill="none"` attribute AFTER first paint
+// and causes a ~500ms flash where stroke icons suddenly get filled in.
+// Force fill:none back on for any svg that references a lucide symbol.
+svg.d-icon use[href^="#lucide-"] {
+  fill: none !important;
+  stroke: currentColor !important;
+}
+svg.d-icon[class*="lucide-"] {
+  fill: none !important;
+  stroke: currentColor !important;
+}
+
 // === EU Stack Design Tokens ===
 // Derived from Discourse's own --secondary (bg) and --primary (text)
 // so they automatically adapt to light and dark palettes.

@@ -3,9 +3,15 @@
   function fix404() {
     if (document.querySelector('.ox-upgrade-btn')) return;
 
-    var btn = document.querySelector('a.btn[href="/"]') ||
-              document.querySelector('.page-not-found .btn') ||
-              document.querySelector('.not-found-container .btn');
+    // ONLY run on actual 404 pages. Previous version used a global
+    // `a.btn[href="/"]` selector that matched any "home" button on the site,
+    // which caused the Upgrade button to appear on random pages (e.g. after
+    // clicking the AI-Bot) and shift the top bar around.
+    var container = document.querySelector('.page-not-found, .not-found-container');
+    if (!container) return;
+
+    var btn = container.querySelector('.btn') ||
+              container.querySelector('a.btn[href="/"]');
     if (!btn) return;
 
     var wrapper = document.createElement('div');

@@ -31,6 +31,7 @@
 
   // Accent
   --eu-amber: #f0a030;
+  --eu-unread: #ff4477; // OX brand pink — used for unread/new-topic badges
 
   // Spacing
   --eu-radius: 10px;
@@ -364,8 +365,8 @@ h1 {
 
   &.new-topic,
   &.unread-posts {
-    background-color: var(--eu-amber);
-    color: var(--secondary);
+    background-color: var(--eu-unread);
+    color: #fff;
     font-weight: 700;
   }
 }

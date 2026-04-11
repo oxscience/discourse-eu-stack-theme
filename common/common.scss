@@ -4,22 +4,6 @@
 //
 // All partials inlined — Discourse theme components don't support @import
 
-// --- Lucide icon fix ------------------------------------------------------
-// Discourse's default CSS applies `fill: currentColor` to every .d-icon,
-// which overrides Lucide's inline `fill="none"` attribute AFTER first paint
-// and causes a ~500ms flash where stroke icons suddenly get filled in.
-// The official discourse-lucide-icons sprite uses symbol IDs prefixed
-// with `lc-`. We target the outer svg.d-icon via :has() so the fill/stroke
-// cascade into the referenced symbol's shadow tree consistently.
-svg.d-icon:has(use[href^="#lc-"]) {
-  fill: none !important;
-  stroke: currentColor !important;
-}
-svg.d-icon use[href^="#lc-"] {
-  fill: none !important;
-  stroke: currentColor !important;
-}
-
 // === EU Stack Design Tokens ===
 // Derived from Discourse's own --secondary (bg) and --primary (text)
 // so they automatically adapt to light and dark palettes.
@@ -94,14 +78,6 @@ svg.d-icon use[href^="#lc-"] {
 // =============================================
 // CATEGORY BOX ICONS — Gradient SVG Icons
 // =============================================
-
-svg.eu-gradient-icon {
-  transition: filter 0.2s ease;
-
-  .category-box:hover & {
-    filter: brightness(1.15) drop-shadow(0 0 8px rgba(109, 140, 255, 0.25));
-  }
-}
 
 // "Neues Thema" button — gradient border glow
 .sidebar-footer-actions .btn-primary,

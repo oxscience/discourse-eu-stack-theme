@@ -360,15 +360,19 @@ h1 {
   border-radius: var(--eu-radius-sm);
 }
 
-.badge-notification {
+// All unread/new-post indicators → OX brand pink
+.badge-notification,
+.badge-notification.new-topic,
+.badge-notification.unread-posts,
+.topic-post-badges .badge-notification,
+.topic-post-badges .new-posts,
+.topic-post-badges .unread-posts,
+.unread-posts,
+.new-posts {
+  background-color: var(--eu-unread) !important;
+  color: #fff !important;
+  font-weight: 700;
   border-radius: var(--eu-radius-sm);
-
-  &.new-topic,
-  &.unread-posts {
-    background-color: var(--eu-unread);
-    color: #fff;
-    font-weight: 700;
-  }
 }
 
 // === Transitions & Polish ===

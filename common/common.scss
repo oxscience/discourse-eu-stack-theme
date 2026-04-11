@@ -8,12 +8,14 @@
 // Discourse's default CSS applies `fill: currentColor` to every .d-icon,
 // which overrides Lucide's inline `fill="none"` attribute AFTER first paint
 // and causes a ~500ms flash where stroke icons suddenly get filled in.
-// Force fill:none back on for any svg that references a lucide symbol.
-svg.d-icon use[href^="#lucide-"] {
+// The official discourse-lucide-icons sprite uses symbol IDs prefixed
+// with `lc-`. We target the outer svg.d-icon via :has() so the fill/stroke
+// cascade into the referenced symbol's shadow tree consistently.
+svg.d-icon:has(use[href^="#lc-"]) {
   fill: none !important;
   stroke: currentColor !important;
 }
-svg.d-icon[class*="lucide-"] {
+svg.d-icon use[href^="#lc-"] {
   fill: none !important;
   stroke: currentColor !important;
 }

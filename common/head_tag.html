@@ -1,3 +1,16 @@
+<style>
+  /* Lucide icon fill fix — keep hollow outline permanently.
+     Discourse's default d-icon CSS sets fill: currentColor, which overrides
+     the Lucide sprite's inline fill="none" attribute after first paint and
+     causes a ~500ms flash from hollow to filled. Injecting early in <head>
+     so it wins the cascade before any runtime-loaded stylesheet. */
+  svg.d-icon:has(use[href^="#lc-"]),
+  svg.d-icon use[href^="#lc-"] {
+    fill: none !important;
+    stroke: currentColor !important;
+  }
+</style>
+
 <script>
 (function() {
   // Only run for anonymous users

@@ -268,6 +268,7 @@ h1 {
 
   code {
     background-color: var(--eu-surface-2);
+    color: var(--primary);
     border: 1px solid var(--eu-border);
     border-radius: 4px;
     padding: 0.15em 0.4em;
@@ -276,6 +277,7 @@ h1 {
 
   pre code {
     background-color: var(--eu-surface-1);
+    color: var(--primary);
     border-radius: var(--eu-radius);
     border: 1px solid var(--eu-border);
   }

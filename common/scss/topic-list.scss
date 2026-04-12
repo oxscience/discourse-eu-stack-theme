@@ -18,9 +18,9 @@
   letter-spacing: -0.01em;
 }
 
-// Visited topics — more muted
+// Visited topics — slightly muted but still readable
 .topic-list .topic-list-item.visited .link-top-line a.title {
-  opacity: 0.65;
+  opacity: 0.85;
 }
 
 // Pinned/featured topic indicator

@@ -6,26 +6,50 @@
   --eu-gradient-warm: linear-gradient(135deg, #6d8cff 0%, #f0a030 100%);
   --eu-gradient-subtle: linear-gradient(135deg, #6d8cff 0%, #8da4ff 100%);
 
-  // Surface layers (dark mode depth)
-  --eu-surface-0: #0f0f11; // deepest background
-  --eu-surface-1: #1a1a1f; // cards, header
-  --eu-surface-2: #222227; // elevated elements
-  --eu-surface-3: #2a2a30; // hover states
+  // Surface layers — dark mode (warm charcoal, Claude-inspired)
+  --eu-surface-0: #292724; // deepest background (warm charcoal, not black)
+  --eu-surface-1: #33302c; // cards, header, sidebar
+  --eu-surface-2: #3d3a35; // elevated elements, inputs
+  --eu-surface-3: #474440; // hover states, active elements
 
   // Borders
-  --eu-border: rgba(255, 255, 255, 0.06);
-  --eu-border-hover: rgba(255, 255, 255, 0.12);
+  --eu-border: rgba(255, 255, 255, 0.08);
+  --eu-border-hover: rgba(255, 255, 255, 0.14);
 
-  // Shadows
-  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
-  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.25);
-  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.3);
+  // Shadows (softer, less harsh)
+  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.12);
+  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.16);
+  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.2);
 
   // Accent
   --eu-amber: #f0a030;
+  --eu-unread: #ff4477;
 
   // Spacing
   --eu-radius: 10px;
   --eu-radius-sm: 6px;
   --eu-radius-lg: 14px;
+}
+
+// Light mode overrides — warm off-white palette (Claude-inspired)
+// Discourse sets .light-scheme on html when light color scheme is active
+html.light-scheme {
+  --eu-gradient: linear-gradient(135deg, #4a6ee0 0%, #7c5cc4 50%, #4a6ee0 100%);
+  --eu-gradient-warm: linear-gradient(135deg, #4a6ee0 0%, #d4890a 100%);
+  --eu-gradient-subtle: linear-gradient(135deg, #4a6ee0 0%, #6b87e8 100%);
+
+  --eu-surface-0: #f5f3ef; // main background (warm off-white)
+  --eu-surface-1: #eae7e2; // cards, header, sidebar
+  --eu-surface-2: #e0ddd8; // elevated elements, inputs
+  --eu-surface-3: #d6d3ce; // hover states, active elements
+
+  --eu-border: rgba(0, 0, 0, 0.08);
+  --eu-border-hover: rgba(0, 0, 0, 0.14);
+
+  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+
+  --eu-amber: #d4890a;
+  --eu-unread: #e0336a;
 }

@@ -13,17 +13,31 @@
   "color_schemes": {
     "EU Stack Dark": {
       "primary": "e8e6e3",
-      "secondary": "0f0f11",
+      "secondary": "292724",
       "tertiary": "6d8cff",
       "quaternary": "a78bfa",
-      "header_background": "1a1a1f",
+      "header_background": "33302c",
       "header_primary": "e8e6e3",
-      "selected": "1e2a4a",
-      "hover": "252529",
-      "highlight": "2d2518",
+      "selected": "2a3550",
+      "hover": "3d3a35",
+      "highlight": "3d3518",
       "danger": "f87171",
       "success": "34d399",
       "love": "f87171"
+    },
+    "EU Stack Light": {
+      "primary": "2d2b28",
+      "secondary": "f5f3ef",
+      "tertiary": "4a6ee0",
+      "quaternary": "7c5cc4",
+      "header_background": "eae7e2",
+      "header_primary": "2d2b28",
+      "selected": "d4ddf5",
+      "hover": "edeae5",
+      "highlight": "fdf0d5",
+      "danger": "dc3545",
+      "success": "22a06b",
+      "love": "e5484d"
     }
   }
 }

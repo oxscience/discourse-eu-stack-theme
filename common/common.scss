@@ -518,7 +518,7 @@ a,
 .ox-landing {
   width: 100%;
   min-height: 100vh;
-  background: #0f0f11;
+  background: var(--eu-surface-0);
 }
 
 // === Logo ===
@@ -666,8 +666,8 @@ a,
 }
 
 .ox-landing__feature-card {
-  background: #1a1a1f;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--eu-surface-1);
+  border: 1px solid var(--eu-border);
   border-radius: 14px;
   padding: 2rem 1.5rem;
   text-align: center;
@@ -730,8 +730,8 @@ a,
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  background: #1a1a1f;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--eu-surface-1);
+  border: 1px solid var(--eu-border);
   border-radius: 14px;
   padding: 1.5rem 2rem;
 

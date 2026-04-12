@@ -290,11 +290,12 @@ h1 {
   }
 }
 
-// Override Published Page Fix theme — sets inline code colors via
-// @media (prefers-color-scheme) with higher specificity than .cooked code
+// Override Published Page Fix theme (loaded after us) — it sets inline code
+// colors via @media (prefers-color-scheme: dark) which conflicts with our
+// color scheme when system dark mode != Discourse theme mode
 .topic-body .cooked :not(pre) > code {
-  background-color: var(--eu-surface-2);
-  color: var(--primary);
+  background-color: var(--eu-surface-2) !important;
+  color: var(--primary) !important;
 }
 
 // === Buttons ===

@@ -20,8 +20,6 @@
   --eu-surface-2: var(--primary-very-low, var(--secondary));
   --eu-surface-3: var(--primary-low, var(--secondary));
 
-  // Header/sidebar slightly elevated from page bg (visible in dark mode)
-  --eu-header-bg: color-mix(in srgb, var(--secondary) 85%, var(--primary) 15%);
 
   // Borders — use Discourse's own low-contrast vars
   --eu-border: var(--primary-low, rgba(0, 0, 0, 0.08));
@@ -189,7 +187,6 @@ html {
 // === Header ===
 
 .d-header-wrap .d-header {
-  background-color: var(--eu-header-bg);
   border-bottom: none;
   backdrop-filter: blur(12px);
 }

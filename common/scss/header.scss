@@ -6,9 +6,13 @@
   backdrop-filter: blur(12px);
 }
 
-// Header icons — softer hover
+// Header icons & flat buttons — clean, no background artifacts
+.d-header .btn-flat,
 .d-header-icons .icon {
   border-radius: var(--eu-radius-sm);
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
 
   &:hover .d-icon {
     color: var(--tertiary);
@@ -24,7 +28,7 @@
 
   &:focus-within {
     border-color: var(--tertiary);
-    box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.15);
+    box-shadow: 0 0 0 2px rgba(var(--eu-blue-rgb), 0.15);
   }
 }
 

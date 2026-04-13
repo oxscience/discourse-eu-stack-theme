@@ -2,423 +2,19 @@
 // Warm dark/light theme with Claude-inspired gray gradations
 // Layers on top of Horizon base theme
 //
-// All partials inlined — Discourse theme components don't support @import
-
-// === EU Stack Design Tokens ===
-// Derived from Discourse's own --secondary (bg) and --primary (text)
-// so they automatically adapt to light and dark palettes.
-
-:root {
-  // Gradients
-  --eu-gradient: linear-gradient(135deg, var(--tertiary) 0%, #a78bfa 50%, var(--tertiary) 100%);
-  --eu-gradient-warm: linear-gradient(135deg, var(--tertiary) 0%, #f0a030 100%);
-  --eu-gradient-subtle: linear-gradient(135deg, var(--tertiary) 0%, #8da4ff 100%);
-
-  // Surface layers — small steps from the background color
-  --eu-surface-0: var(--secondary);
-  --eu-surface-1: var(--d-content-background, var(--secondary));
-  --eu-surface-2: var(--primary-very-low, var(--secondary));
-  --eu-surface-3: var(--primary-low, var(--secondary));
-
-  // Borders — use Discourse's own low-contrast vars
-  --eu-border: var(--primary-low, rgba(0, 0, 0, 0.08));
-  --eu-border-hover: var(--primary-low-mid, rgba(0, 0, 0, 0.15));
-
-  // Shadows — subtle, work in both modes
-  --eu-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --eu-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --eu-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
-
-  // Accent
-  --eu-amber: #f0a030;
-  --eu-unread: #ff4477; // OX brand pink — used for unread/new-topic badges
-
-  // Spacing
-  --eu-radius: 10px;
-  --eu-radius-sm: 6px;
-  --eu-radius-lg: 14px;
-}
-
-// === Gradient Text ===
-
-@mixin gradient-text($gradient: var(--eu-gradient)) {
-  background: $gradient;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-// Category heading on individual category page
-.category-heading p {
-  @include gradient-text;
-}
-
-// Topic title on topic detail page
-#topic-title .fancy-title {
-  @include gradient-text;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-}
-
-// "Willkommen zurück!" heading
-.welcome-banner__header {
-  @include gradient-text;
-}
-
-// Sidebar section titles: "ADMIN", "KATEGORIEN"
-.sidebar-section-header-text {
-  @include gradient-text(var(--eu-gradient-subtle));
-  font-weight: 700;
-}
-
-// User profile name
-.user-main .about.collapsed-info .user-profile-names .username {
-  @include gradient-text;
-}
-
-// =============================================
-// CATEGORY BOX ICONS — Gradient SVG Icons
-// =============================================
-
-// "Neues Thema" button — gradient border glow
-.sidebar-footer-actions .btn-primary,
-.horizon-new-topic-button .btn {
-  position: relative;
-  background: var(--eu-surface-2);
-  border: 1px solid transparent;
-  background-clip: padding-box;
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -1px;
-    border-radius: inherit;
-    background: var(--eu-gradient);
-    z-index: -1;
-    opacity: 0.5;
-    transition: opacity 0.2s ease;
-  }
-
-  &:hover::before {
-    opacity: 0.8;
-  }
-}
-
-// === Surfaces & Depth ===
-
-html {
-  background-color: var(--eu-surface-0);
-}
-
-#main-outlet {
-  background-color: var(--eu-surface-0);
-}
-
-.sidebar-wrapper .sidebar-container {
-  background-color: transparent;
-}
-
-.topic-list .topic-list-item {
-  border-bottom: 1px solid var(--eu-border);
-}
-
-.modal-inner-container {
-  background-color: var(--eu-surface-1);
-  border: 1px solid var(--eu-border);
-  border-radius: var(--eu-radius-lg);
-  box-shadow: var(--eu-shadow-lg);
-}
-
-.select-kit .select-kit-collection,
-.dropdown-menu,
-.user-menu,
-.search-menu-container {
-  border: 1px solid var(--eu-border);
-  border-radius: var(--eu-radius);
-  box-shadow: var(--eu-shadow-md);
-}
-
-.d-editor-container {
-  border-radius: var(--eu-radius);
-}
-
-.topic-body {
-  border-top-color: var(--eu-border);
-}
-
-// === Topic List ===
-
-.topic-list .topic-list-item {
-  transition: background-color 0.15s ease, box-shadow 0.15s ease;
-  border-radius: var(--eu-radius);
-
-  &:hover {
-    background-color: var(--eu-surface-2);
-    box-shadow: var(--eu-shadow-sm);
-  }
-}
-
-.topic-list .topic-list-data .link-top-line a.title {
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.topic-list .topic-list-item.visited .link-top-line a.title {
-  opacity: 0.85;
-}
-
-.topic-list .topic-list-item .topic-statuses .pinned {
-  color: var(--eu-amber);
-}
-
-.badge-category__wrapper {
-  border-radius: var(--eu-radius-sm);
-}
-
-.topic-excerpt {
-  color: var(--primary-medium);
-  font-size: var(--font-down-1);
-  line-height: 1.5;
-}
-
-// === Header ===
-
-.d-header-wrap .d-header {
-  border-bottom: none;
-  backdrop-filter: blur(12px);
-}
-
-.d-header .btn-flat,
-.d-header-icons .icon {
-  border-radius: var(--eu-radius-sm);
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-
-  &:hover .d-icon {
-    color: var(--tertiary);
-  }
-}
-
-.search-menu .search-input,
-.search-menu-container .search-input {
-  border-radius: var(--eu-radius);
-  border-color: var(--eu-border);
-
-  &:focus-within {
-    border-color: var(--tertiary);
-    box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.15);
-  }
-}
-
-.category-breadcrumb {
-  li .badge-category {
-    border-radius: var(--eu-radius-sm);
-  }
-}
-
-// === Sidebar ===
-
-.sidebar-section-link {
-  border-radius: var(--eu-radius-sm);
-  transition: background-color 0.12s ease;
-
-  &:hover {
-    background-color: var(--eu-surface-2);
-  }
-
-  &.active {
-    background-color: var(--eu-surface-2);
-    border-left: 2px solid var(--tertiary);
-  }
-}
-
-.sidebar-section-wrapper + .sidebar-section-wrapper {
-  border-top: 1px solid var(--eu-border);
-}
-
-.sidebar-footer-wrapper {
-  border-top: 1px solid var(--eu-border);
-}
-
-// === Typography ===
-
-:root {
-  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto,
-    "Helvetica Neue", sans-serif;
-  --heading-font-family: var(--font-family);
-}
-
-h1, h2, h3, h4 {
-  letter-spacing: -0.02em;
-  font-weight: 700;
-}
-
-h1 {
-  font-weight: 800;
-}
-
-.cooked {
-  line-height: 1.7;
-  font-size: var(--font-up-1);
-
-  h2, h3 {
-    margin-top: 1.5em;
-  }
-
-  code {
-    background-color: var(--eu-surface-2);
-    color: var(--primary);
-    border: 1px solid var(--eu-border);
-    border-radius: 4px;
-    padding: 0.15em 0.4em;
-    font-size: 0.9em;
-  }
-
-  pre code {
-    background-color: var(--eu-surface-1);
-    color: var(--primary);
-    border-radius: var(--eu-radius);
-    border: 1px solid var(--eu-border);
-  }
-
-  blockquote {
-    border-left: 3px solid var(--tertiary);
-    background: var(--eu-surface-1);
-    border-radius: 0 var(--eu-radius-sm) var(--eu-radius-sm) 0;
-    padding: 0.8em 1.2em;
-  }
-}
-
-// Override Published Page Fix theme (loaded after us) — it sets inline code
-// colors via @media (prefers-color-scheme: dark) which conflicts with our
-// color scheme when system dark mode != Discourse theme mode
-.topic-body .cooked :not(pre) > code {
-  background-color: var(--eu-surface-2) !important;
-  color: var(--primary) !important;
-}
-
-// === Buttons ===
-
-.btn {
-  border-radius: var(--eu-radius-sm);
-  transition: all 0.15s ease;
-  font-weight: 600;
-}
-
-.btn-primary {
-  background: var(--tertiary);
-  border: none;
-  box-shadow: var(--eu-shadow-sm);
-
-  &:hover {
-    filter: brightness(1.1);
-    box-shadow: var(--eu-shadow-md);
-  }
-}
-
-.btn-default:not(.user-menu .btn-default):not(.d-header-icons .btn-default) {
-  background-color: var(--eu-surface-2);
-  border: 1px solid var(--eu-border);
-
-  &:hover {
-    background-color: var(--eu-surface-3);
-    border-color: var(--eu-border-hover);
-  }
-}
-
-.btn-toggle-reply-likes.has-likes .d-icon,
-.toggle-like.has-likes .d-icon {
-  color: var(--love);
-}
-
-.nav-pills > li > a {
-  border-radius: var(--eu-radius-sm);
-  transition: all 0.12s ease;
-
-  &:hover {
-    background: var(--tertiary) !important;
-    color: #fff !important;
-  }
-
-  &.active {
-    background: transparent !important;
-    color: var(--tertiary) !important;
-    border-bottom: 2px solid var(--tertiary);
-    border-radius: var(--eu-radius-sm) var(--eu-radius-sm) 0 0;
-    font-weight: 700;
-  }
-}
-
-// === Badges & Tags ===
-
-.discourse-tag {
-  border-radius: var(--eu-radius-sm);
-  padding: 0.15em 0.5em;
-  font-size: var(--font-down-1);
-  background-color: var(--eu-surface-2);
-  border: 1px solid var(--eu-border);
-  transition: all 0.12s ease;
-
-  &:hover {
-    border-color: var(--eu-border-hover);
-    background-color: var(--eu-surface-3);
-  }
-}
-
-.user-badge {
-  border-radius: var(--eu-radius-sm);
-}
-
-// All unread/new-post indicators → OX brand pink
-.badge-notification,
-.badge-notification.new-topic,
-.badge-notification.unread-posts,
-.topic-post-badges .badge-notification,
-.topic-post-badges .new-posts,
-.topic-post-badges .unread-posts,
-.unread-posts,
-.new-posts {
-  background-color: var(--eu-unread) !important;
-  color: #fff !important;
-  font-weight: 700;
-  border-radius: var(--eu-radius-sm);
-}
-
-// === Transitions & Polish ===
-
-a,
-.btn,
-.nav-pills > li > a,
-.sidebar-section-link,
-.select-kit .select-kit-row {
-  transition: color 0.12s ease, background-color 0.12s ease,
-    border-color 0.12s ease, box-shadow 0.15s ease, opacity 0.12s ease;
-}
-
-*:focus-visible {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.3);
-  border-radius: var(--eu-radius-sm);
-}
-
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--eu-surface-3);
-  border-radius: 4px;
-
-  &:hover {
-    background-color: var(--primary-low-mid);
-  }
-}
+// Structure: Partials in common/scss/ are the single source of truth for
+// all reusable rules (variables, surfaces, header, sidebar, buttons, badges,
+// typography, transitions, gradient-text, topic-list).
+//
+// This file contains ONLY rules that live exclusively here:
+// - Subcategory pills (gradient-tint)
+// - Lock/doc icon overrides
+// - LMS course tracker
+// - Inline code !important override (Published Page Fix theme conflict)
+// - AI bot message bubble
+// - OX Campus UX customizations (user menu, sidebar community section)
+// - Fliesstext size override
+// - Landing page (anonymous users)
 
 // === Subcategory Pills — Gradient-Tint + larger touch targets ===
 // Pat chose "Gradient-Tint": category color as subtle gradient wash,
@@ -483,6 +79,14 @@ a,
     max-width: 100%;
     text-align: left;
   }
+}
+
+// === Override Published Page Fix theme ===
+// It sets inline code colors via @media (prefers-color-scheme: dark) which
+// conflicts with our color scheme when system dark mode != Discourse theme mode
+.topic-body .cooked :not(pre) > code {
+  background-color: var(--eu-surface-2) !important;
+  color: var(--primary) !important;
 }
 
 // === AI Bot — User Message Bubble ===
@@ -565,7 +169,7 @@ a,
     height: 400px;
     background: radial-gradient(
       ellipse at center,
-      rgba(109, 140, 255, 0.08) 0%,
+      rgba(var(--eu-blue-rgb), 0.08) 0%,
       rgba(167, 139, 250, 0.04) 40%,
       transparent 70%
     );
@@ -594,7 +198,10 @@ a,
 }
 
 .ox-landing__title-accent {
-  @include gradient-text;
+  background: var(--eu-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   font-size: inherit;
   font-weight: inherit;
 }
@@ -628,12 +235,12 @@ a,
   background: #6d8cff;
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 4px 20px rgba(109, 140, 255, 0.25);
+  box-shadow: 0 4px 20px rgba(var(--eu-blue-rgb), 0.25);
   transition: all 0.2s ease;
 
   &:hover {
     background: #5a7af0;
-    box-shadow: 0 6px 28px rgba(109, 140, 255, 0.35);
+    box-shadow: 0 6px 28px rgba(var(--eu-blue-rgb), 0.35);
     transform: translateY(-1px);
   }
 }
@@ -651,8 +258,8 @@ a,
   transition: all 0.2s ease;
 
   &:hover {
-    border-color: rgba(109, 140, 255, 0.4);
-    background: rgba(109, 140, 255, 0.08);
+    border-color: rgba(var(--eu-blue-rgb), 0.4);
+    background: rgba(var(--eu-blue-rgb), 0.08);
   }
 }
 
@@ -716,7 +323,7 @@ a,
   border-radius: 12px;
   background: linear-gradient(
     135deg,
-    rgba(109, 140, 255, 0.15),
+    rgba(var(--eu-blue-rgb), 0.15),
     rgba(167, 139, 250, 0.1)
   );
 

@@ -14,7 +14,7 @@ a,
 // Focus ring: blue glow instead of default outline
 *:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px rgba(109, 140, 255, 0.3);
+  box-shadow: 0 0 0 2px rgba(var(--eu-blue-rgb), 0.3);
   border-radius: var(--eu-radius-sm);
 }
 
@@ -33,6 +33,6 @@ a,
   border-radius: 4px;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--primary-low-mid);
   }
 }

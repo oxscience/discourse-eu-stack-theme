@@ -7,7 +7,7 @@
   font-weight: 600;
 }
 
-// Primary buttons — gradient background
+// Primary buttons
 .btn-primary {
   background: var(--tertiary);
   border: none;
@@ -19,9 +19,8 @@
   }
 }
 
-// Default/flat buttons — subtle surface
-.btn-default,
-.btn-flat {
+// Default buttons — subtle surface (exclude buttons inside header/user-menu)
+.btn-default:not(.user-menu .btn-default):not(.d-header-icons .btn-default) {
   background-color: var(--eu-surface-2);
   border: 1px solid var(--eu-border);
 
@@ -37,17 +36,21 @@
   color: var(--love);
 }
 
-// Nav pills
+// Nav pills — gradient hover, underline active
 .nav-pills > li > a {
   border-radius: var(--eu-radius-sm);
-  transition: background-color 0.12s ease;
+  transition: all 0.12s ease;
 
   &:hover {
-    background-color: var(--eu-surface-2);
+    background: var(--tertiary) !important;
+    color: #fff !important;
   }
 
   &.active {
-    background: var(--tertiary);
-    color: #fff;
+    background: transparent !important;
+    color: var(--tertiary) !important;
+    border-bottom: 2px solid var(--tertiary);
+    border-radius: var(--eu-radius-sm) var(--eu-radius-sm) 0 0;
+    font-weight: 700;
   }
 }

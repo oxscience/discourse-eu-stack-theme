@@ -6,17 +6,17 @@ html {
   background-color: var(--eu-surface-0);
 }
 
-// Content area gets slightly elevated surface
+// Content area
 #main-outlet {
   background-color: var(--eu-surface-0);
 }
 
-// Sidebar gets surface-1
+// Sidebar gets transparent (inherits page bg)
 .sidebar-wrapper .sidebar-container {
   background-color: transparent;
 }
 
-// Cards and elevated elements get surface-1
+// Topic list item border
 .topic-list .topic-list-item {
   border-bottom: 1px solid var(--eu-border);
 }

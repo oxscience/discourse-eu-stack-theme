@@ -26,9 +26,8 @@ h1 {
     margin-top: 1.5em;
   }
 
-  // Inline code: softer look (also overrides Published Page Fix theme)
-  code,
-  &:not(pre) > code {
+  // Inline code: softer look
+  code {
     background-color: var(--eu-surface-2);
     color: var(--primary);
     border: 1px solid var(--eu-border);
@@ -40,6 +39,7 @@ h1 {
   // Code blocks
   pre code {
     background-color: var(--eu-surface-1);
+    color: var(--primary);
     border-radius: var(--eu-radius);
     border: 1px solid var(--eu-border);
   }

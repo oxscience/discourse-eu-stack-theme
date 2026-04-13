@@ -27,10 +27,14 @@
 .navigation-container .nav-pills {
   display: flex !important;
   gap: 0.5em;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  flex-wrap: nowrap;
 
   .nav-item-categories,
   .nav-item-latest {
     flex: 1;
+    min-width: 0;
 
     a {
       display: block;
@@ -39,6 +43,9 @@
       border-radius: var(--eu-radius, 10px);
       background: var(--eu-surface-2, var(--tertiary-low));
       font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &.active {
         background: var(--tertiary);
@@ -58,23 +65,24 @@
   font-size: 0.93em;
 }
 
-// Mobile sidebar drawer — remove all card styling (bg, radius, shadow)
-// Targets every possible container Discourse uses for the mobile sidebar
-.sidebar-hamburger-dropdown,
-.menu-panel,
-.menu-panel .panel-body,
-.menu-panel .panel-body-contents,
-.sidebar-wrapper,
-.sidebar-container,
-.sidebar-sections,
-#d-sidebar,
-.d-drawer,
-.d-drawer__body,
-.d-drawer__content,
-.drawer-container {
+// Mobile sidebar drawer — match page background
+// --d-sidebar-background is set in color_definitions.scss and variables.scss,
+// this is a safety net for the mobile drawer overlay
+.sidebar-wrapper {
   background: var(--secondary) !important;
-  background-color: var(--secondary) !important;
-  border: none !important;
-  border-radius: 0 !important;
-  box-shadow: none !important;
+}
+
+// Code blocks: horizontal scroll on mobile
+.cooked pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+// Topic titles: prevent overflow
+.topic-list .link-top-line a.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }

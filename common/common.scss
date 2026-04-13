@@ -161,10 +161,12 @@ html {
 .topic-list .topic-list-data .link-top-line a.title {
   font-weight: 600;
   letter-spacing: -0.01em;
+  color: var(--primary-very-high) !important;
 }
 
 .topic-list .topic-list-item.visited .link-top-line a.title {
-  opacity: 0.92;
+  color: var(--primary-high) !important;
+  opacity: 1;
 }
 
 .topic-list .topic-list-item .topic-statuses .pinned {

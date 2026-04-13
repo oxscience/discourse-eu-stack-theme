@@ -58,9 +58,22 @@
   font-size: 0.93em;
 }
 
-// Mobile sidebar drawer — clean up hamburger overlay
-.sidebar-hamburger-dropdown {
+// Mobile sidebar drawer — remove all card styling (bg, radius, shadow)
+// Targets every possible container Discourse uses for the mobile sidebar
+.sidebar-hamburger-dropdown,
+.menu-panel,
+.menu-panel .panel-body,
+.menu-panel .panel-body-contents,
+.sidebar-wrapper,
+.sidebar-container,
+.sidebar-sections,
+#d-sidebar,
+.d-drawer,
+.d-drawer__body,
+.d-drawer__content,
+.drawer-container {
   background: var(--secondary) !important;
+  background-color: var(--secondary) !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;

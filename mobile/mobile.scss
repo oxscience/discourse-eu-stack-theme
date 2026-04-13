@@ -57,3 +57,22 @@
 .cooked {
   font-size: 0.93em;
 }
+
+// Mobile sidebar drawer — remove card-like box, make it seamless
+.sidebar-hamburger-dropdown {
+  background: var(--secondary) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.menu-panel.sidebar-hamburger-dropdown .panel-body {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.menu-panel.sidebar-hamburger-dropdown .panel-body-contents {
+  background: transparent !important;
+}

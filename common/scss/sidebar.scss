@@ -1,9 +1,10 @@
 // === Sidebar ===
 // Clean sidebar with subtle section separation
 
-// Remove Horizon's tinted sidebar background — use page bg instead
-.sidebar-wrapper {
-  background: var(--secondary) !important;
+// Override Horizon's accent-tinted sidebar background
+:root {
+  --d-sidebar-background: var(--secondary);
+  --d-sidebar-highlight-background: var(--eu-surface-2);
 }
 
 .sidebar-section-link {

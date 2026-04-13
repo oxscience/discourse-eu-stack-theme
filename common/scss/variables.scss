@@ -1,6 +1,10 @@
-// === EU Stack Design Tokens ===
+// === OX Campus Design Tokens ===
 
 :root {
+  // Override Horizon's accent-tinted sidebar bg
+  --d-sidebar-background: var(--secondary);
+  --d-sidebar-highlight-background: var(--hover);
+
   // Gradient used for accent text (headings, hero elements)
   --eu-gradient: linear-gradient(135deg, #6d8cff 0%, #a78bfa 50%, #6d8cff 100%);
   --eu-gradient-warm: linear-gradient(135deg, #6d8cff 0%, #f0a030 100%);

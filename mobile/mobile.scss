@@ -58,22 +58,10 @@
   font-size: 0.93em;
 }
 
-// Mobile sidebar — remove tinted background, match page bg
-.sidebar-wrapper {
-  background: var(--secondary) !important;
-}
-
-// Sidebar drawer overlay (hamburger menu on small screens)
+// Mobile sidebar drawer — clean up hamburger overlay
 .sidebar-hamburger-dropdown {
   background: var(--secondary) !important;
   border: none !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-}
-
-.menu-panel.sidebar-hamburger-dropdown .panel-body,
-.menu-panel.sidebar-hamburger-dropdown .panel-body-contents {
-  background: transparent !important;
-  border: none !important;
-  border-radius: 0 !important;
 }

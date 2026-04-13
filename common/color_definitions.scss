@@ -1,0 +1,9 @@
+// OX Campus — Override Horizon's accent-derived sidebar background
+// This file compiles into the color_definitions stylesheet, so it can
+// override variables set with !important in that same cascade layer.
+
+:root {
+  --d-sidebar-background: var(--secondary) !important;
+  --d-sidebar-highlight-background: var(--tertiary-low) !important;
+  --background-color: var(--secondary) !important;
+}

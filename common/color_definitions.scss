@@ -7,5 +7,5 @@
   --d-sidebar-highlight-background: var(--tertiary-low) !important;
   --background-color: var(--secondary) !important;
   // Lift content area slightly from page bg in dark mode
-  --d-content-background: color-mix(in srgb, var(--secondary) 88%, var(--primary) 12%) !important;
+  --d-content-background: color-mix(in srgb, var(--secondary) 88%, #fff 12%) !important;
 }

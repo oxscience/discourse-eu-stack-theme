@@ -111,13 +111,7 @@ html {
   background-color: var(--eu-surface-0);
 }
 
-// Content area: in dark mode, lift slightly from page bg for separation
-// (like light mode where Horizon auto-creates this contrast)
-html.dark-scheme #main-outlet {
-  background-color: var(--eu-surface-2);
-}
-
-html:not(.dark-scheme) #main-outlet {
+#main-outlet {
   background-color: var(--eu-surface-0);
 }
 

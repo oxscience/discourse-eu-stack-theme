@@ -1,6 +1,11 @@
 // === Sidebar ===
 // Clean sidebar with subtle section separation
 
+// Remove Horizon's tinted sidebar background — use page bg instead
+.sidebar-wrapper {
+  background: var(--secondary) !important;
+}
+
 .sidebar-section-link {
   border-radius: var(--eu-radius-sm);
   transition: background-color 0.12s ease;

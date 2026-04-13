@@ -77,7 +77,7 @@
 .hamburger-panel .menu-panel.slide-in,
 .hamburger-panel .menu-panel.drop-down {
   border: none !important;
-  box-shadow: none !important;
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.12) !important;
   background: var(--secondary) !important;
   padding: 0 !important;
   width: 60vw !important;

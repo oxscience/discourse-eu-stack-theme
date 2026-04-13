@@ -65,11 +65,30 @@
   font-size: 0.93em;
 }
 
-// Mobile sidebar drawer — match page background
-// --d-sidebar-background is set in color_definitions.scss and variables.scss,
-// this is a safety net for the mobile drawer overlay
+// Mobile sidebar drawer — strip the card look from Discourse core's .menu-panel
+// Core sets: border, box-shadow, padding, border-radius on .menu-panel
+// Horizon sets: background-color: var(--d-content-background) on .menu-panel
+// Result: a gray bordered box inside the white sidebar. Kill it all.
 .sidebar-wrapper {
   background: var(--secondary) !important;
+}
+
+.hamburger-panel .menu-panel,
+.hamburger-panel .menu-panel.slide-in,
+.hamburger-panel .menu-panel.drop-down {
+  border: none !important;
+  box-shadow: none !important;
+  background: var(--secondary) !important;
+  padding: 0 !important;
+  width: 85vw !important;
+  max-width: 320px !important;
+}
+
+.hamburger-panel .menu-panel .panel-body,
+.hamburger-panel .menu-panel .panel-body-contents,
+.hamburger-panel .revamped {
+  background: transparent !important;
+  border: none !important;
 }
 
 // Code blocks: horizontal scroll on mobile

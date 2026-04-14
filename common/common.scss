@@ -790,3 +790,22 @@ a,
   height: 40px;
   background: rgba(255, 255, 255, 0.06);
 }
+
+// =============================================
+// "NEUES THEMA" — nur fuer Staff + Open Campus
+// =============================================
+// Versteckt den Button fuer normale User ueberall,
+// ausser in der Open Campus Kategorie (slug: austausch).
+body:not(.staff) {
+  #create-topic,
+  .sidebar-new-topic-button {
+    display: none !important;
+  }
+}
+
+body:not(.staff).category-austausch {
+  #create-topic,
+  .sidebar-new-topic-button {
+    display: inline-flex !important;
+  }
+}

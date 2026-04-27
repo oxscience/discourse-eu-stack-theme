@@ -112,7 +112,29 @@ export default apiInitializer("0.8", (api) => {
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
-  api.onPageChange(() => processAll(document));
+  // On route change (or bfcache restore) Ember can recycle a .category-box
+  // while replacing its inner <svg> with a fresh sprite reference. The stale
+  // data-eu-grad marker would otherwise make us skip it, leaving raw Lucide
+  // outlines visible. Detect that case (svg has a <use> again → was re-
+  // rendered) and reset the marker so applyGradientIcon reprocesses.
+  function refreshStaleBoxes() {
+    document.querySelectorAll(".category-box").forEach((box) => {
+      const svg = box.querySelector(
+        ".category-box-heading .badge-category.--style-icon > svg.d-icon"
+      );
+      if (svg && svg.querySelector("use")) {
+        delete box.dataset.euGrad;
+      }
+      applyGradientIcon(box);
+    });
+  }
+
+  api.onPageChange(refreshStaleBoxes);
+
+  // bfcache restore: JS doesn't re-init, so trigger refresh manually.
+  window.addEventListener("pageshow", (e) => {
+    if (e.persisted) refreshStaleBoxes();
+  });
 
   // Override AI bot header icons (kept from previous version)
   api.modifyClass("component:ai-bot-header-icon", {

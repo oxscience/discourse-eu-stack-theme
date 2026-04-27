@@ -31,20 +31,33 @@ export default apiInitializer("0.8", (api) => {
   }
 
   function applyGradientIcon(box) {
-    if (box.dataset.euGrad) return;
-
     const link = box.querySelector("a.parent-box-link");
     const svg = box.querySelector(
       ".category-box-heading .badge-category.--style-icon > svg.d-icon"
     );
     if (!link || !svg) return;
 
+    // Sprite ref: prefer a fresh <use> reference, otherwise fall back to a
+    // ref we cached on a previous apply. This lets us re-render even after
+    // the <use> has been replaced by our own group.
     const useEl = svg.querySelector("use");
-    if (!useEl) return;
-
-    const symbolRef =
-      useEl.getAttribute("href") || useEl.getAttribute("xlink:href");
+    const freshRef = useEl
+      ? useEl.getAttribute("href") || useEl.getAttribute("xlink:href")
+      : null;
+    const symbolRef = freshRef || box.dataset.euSymbolRef;
     if (!symbolRef) return;
+
+    box.dataset.euSymbolRef = symbolRef;
+
+    // Idempotent: skip only when the marker is set AND our gradient is
+    // physically present in the SVG. The marker alone is no longer trusted —
+    // back-navigation and bfcache restores can leave it stale.
+    if (
+      box.dataset.euGrad &&
+      svg.querySelector("defs > linearGradient[id^='eu-g-']")
+    ) {
+      return;
+    }
 
     const symbol = document.getElementById(symbolRef.replace("#", ""));
     if (!symbol) return;
@@ -73,17 +86,26 @@ export default apiInitializer("0.8", (api) => {
     defs.appendChild(grad);
 
     const g = document.createElementNS(ns, "g");
-    g.setAttribute("stroke", "url(#" + uid + ")");
     g.setAttribute("fill", "none");
-    // Inherit Lucide stroke styling from the source symbol
-    ["stroke-width", "stroke-linecap", "stroke-linejoin"].forEach((attr) => {
-      const val = symbol.getAttribute(attr);
-      if (val) g.setAttribute(attr, val);
-    });
+    // Lucide defaults if the source symbol doesn't carry them.
+    g.setAttribute("stroke-width", symbol.getAttribute("stroke-width") || "2");
+    g.setAttribute("stroke-linecap", symbol.getAttribute("stroke-linecap") || "round");
+    g.setAttribute("stroke-linejoin", symbol.getAttribute("stroke-linejoin") || "round");
     g.innerHTML = symbol.innerHTML;
 
-    // Replace the existing SVG's content in place — Discourse keeps the
-    // wrapper, we just swap the inner sprite reference for our gradient group.
+    // Force gradient stroke directly on every drawable child. Lucide paths
+    // commonly carry stroke="currentColor", which would otherwise override
+    // any stroke set on the parent <g>.
+    g.querySelectorAll(
+      "path, line, circle, rect, polygon, polyline, ellipse"
+    ).forEach((el) => {
+      el.setAttribute("stroke", "url(#" + uid + ")");
+      const fill = el.getAttribute("fill");
+      if (!fill || fill === "currentColor") {
+        el.setAttribute("fill", "none");
+      }
+    });
+
     svg.innerHTML = "";
     svg.appendChild(defs);
     svg.appendChild(g);
@@ -112,25 +134,16 @@ export default apiInitializer("0.8", (api) => {
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // On route change / browser back-forward / bfcache restore, Ember can
-  // re-render the inner <svg> of a recycled .category-box. Detect any box
-  // whose SVG has lost our gradient and reprocess it.
+  // On route change / browser back-forward / bfcache restore, even when the
+  // DOM looks correct, the browser may render an older paint of the SVG
+  // (raw Lucide outlines that were visible before our first apply). Force a
+  // full re-apply on every refresh — applyGradientIcon rewrites the SVG
+  // contents, which triggers a fresh paint and erases any stale rendering.
+  // Cheap because there are only a handful of category boxes.
   function refreshStaleBoxes() {
     document.querySelectorAll(".category-box").forEach((box) => {
-      const svg = box.querySelector(
-        ".category-box-heading .badge-category.--style-icon > svg.d-icon"
-      );
-      if (!svg) return;
-      // Reprocess if our <linearGradient> isn't in this SVG anymore,
-      // regardless of why (Ember rewrote it, bfcache restored an old
-      // snapshot that lost it, etc.). applyGradientIcon writes it back.
-      const hasOurGrad = !!svg.querySelector(
-        "defs > linearGradient[id^='eu-g-']"
-      );
-      if (!hasOurGrad) {
-        delete box.dataset.euGrad;
-        applyGradientIcon(box);
-      }
+      delete box.dataset.euGrad;
+      applyGradientIcon(box);
     });
   }
 

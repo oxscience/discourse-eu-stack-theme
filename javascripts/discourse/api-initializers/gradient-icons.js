@@ -112,28 +112,44 @@ export default apiInitializer("0.8", (api) => {
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
-  // On route change (or bfcache restore) Ember can recycle a .category-box
-  // while replacing its inner <svg> with a fresh sprite reference. The stale
-  // data-eu-grad marker would otherwise make us skip it, leaving raw Lucide
-  // outlines visible. Detect that case (svg has a <use> again → was re-
-  // rendered) and reset the marker so applyGradientIcon reprocesses.
+  // On route change / browser back-forward / bfcache restore, Ember can
+  // re-render the inner <svg> of a recycled .category-box. Detect any box
+  // whose SVG has lost our gradient and reprocess it.
   function refreshStaleBoxes() {
     document.querySelectorAll(".category-box").forEach((box) => {
       const svg = box.querySelector(
         ".category-box-heading .badge-category.--style-icon > svg.d-icon"
       );
-      if (svg && svg.querySelector("use")) {
+      if (!svg) return;
+      // Reprocess if our <linearGradient> isn't in this SVG anymore,
+      // regardless of why (Ember rewrote it, bfcache restored an old
+      // snapshot that lost it, etc.). applyGradientIcon writes it back.
+      const hasOurGrad = !!svg.querySelector(
+        "defs > linearGradient[id^='eu-g-']"
+      );
+      if (!hasOurGrad) {
         delete box.dataset.euGrad;
+        applyGradientIcon(box);
       }
-      applyGradientIcon(box);
     });
   }
 
-  api.onPageChange(refreshStaleBoxes);
+  // Run once now AND on the next frame — Ember may not have finished
+  // re-rendering by the time the routing hook fires.
+  function refreshNowAndNextFrame() {
+    refreshStaleBoxes();
+    requestAnimationFrame(refreshStaleBoxes);
+  }
 
-  // bfcache restore: JS doesn't re-init, so trigger refresh manually.
+  api.onPageChange(refreshNowAndNextFrame);
+
+  // Native browser back/forward — fires reliably even when Discourse's
+  // own page-change hook misses a transition.
+  window.addEventListener("popstate", refreshNowAndNextFrame);
+
+  // bfcache restore: JS doesn't re-init, trigger refresh manually.
   window.addEventListener("pageshow", (e) => {
-    if (e.persisted) refreshStaleBoxes();
+    if (e.persisted) refreshNowAndNextFrame();
   });
 
   // Override AI bot header icons (kept from previous version)

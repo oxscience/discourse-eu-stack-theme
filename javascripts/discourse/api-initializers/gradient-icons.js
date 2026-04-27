@@ -31,21 +31,14 @@ export default apiInitializer("0.8", (api) => {
   }
 
   function applyGradientIcon(box) {
+    if (box.dataset.euGrad) return;
+
     const link = box.querySelector("a.parent-box-link");
     const svg = box.querySelector(
       ".category-box-heading .badge-category.--style-icon > svg.d-icon"
     );
     if (!link || !svg) return;
 
-    // Idempotent skip: only skip when *this* SVG already has our gradient.
-    // Don't trust box.dataset — Ember can recycle the box element and replace
-    // the inner SVG on back-navigation, leaving data-eu-grad stale.
-    if (svg.querySelector("defs > linearGradient[id^='eu-g-']")) {
-      box.dataset.euGrad = "1";
-      return;
-    }
-
-    // Need a fresh sprite reference to clone from
     const useEl = svg.querySelector("use");
     if (!useEl) return;
 
@@ -105,44 +98,21 @@ export default apiInitializer("0.8", (api) => {
       .forEach(applyGradientIcon);
   }
 
-  // Throttled full rescan — cheap because applyGradientIcon is idempotent.
-  // Catches Ember re-renders that swap the inner SVG of a recycled
-  // .category-box (which a narrow node-match observer would miss).
-  let scanScheduled = false;
-  function scheduleScan() {
-    if (scanScheduled) return;
-    scanScheduled = true;
-    requestAnimationFrame(() => {
-      scanScheduled = false;
-      processAll(document);
-    });
-  }
-
   const observer = new MutationObserver((mutations) => {
     for (const m of mutations) {
-      if (m.addedNodes.length === 0) continue;
-      for (const node of m.addedNodes) {
-        if (node.nodeType !== 1) continue;
-        // Only re-scan if the insert could plausibly affect category icons
-        if (
-          (node.matches &&
-            (node.matches(".category-box, svg.d-icon, .badge-category, .category-boxes") ||
-              node.querySelector?.(".category-box, svg.d-icon"))) ||
-          (node.querySelector && node.querySelector(".category-box"))
-        ) {
-          scheduleScan();
-          return;
+      m.addedNodes.forEach((node) => {
+        if (node.nodeType !== 1) return;
+        if (node.classList && node.classList.contains("category-box")) {
+          applyGradientIcon(node);
+        } else if (node.querySelectorAll) {
+          processAll(node);
         }
-      }
+      });
     }
   });
   observer.observe(document.body, { childList: true, subtree: true });
 
   api.onPageChange(() => processAll(document));
-
-  // bfcache restore: when the browser restores the page from back/forward
-  // cache, JS doesn't re-init but the DOM may have stale content. Re-scan.
-  window.addEventListener("pageshow", () => processAll(document));
 
   // Override AI bot header icons (kept from previous version)
   api.modifyClass("component:ai-bot-header-icon", {

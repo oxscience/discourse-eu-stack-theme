@@ -423,7 +423,18 @@ a,
   }
 }
 
+// === Subcategory list — hide on categories index ===
+// Pat: keine Subkategorien-Pillen in der Boxes-Übersicht (2026-05-07).
+// Affects only the categories index page (boxes / boxes-with-topics layout),
+// not topic-list breadcrumbs or category-show pages.
+.category-boxes .category-box .subcategories,
+.category-boxes-with-topics .category-box .subcategories {
+  display: none;
+}
+
 // === Subcategory Pills — Gradient-Tint + larger touch targets ===
+// Kept for any layout that still renders subcategory pills (e.g. category-show).
+// On the index boxes view they are hidden by the rule above.
 // Pat chose "Gradient-Tint": category color as subtle gradient wash,
 // tinted text, colored border.
 

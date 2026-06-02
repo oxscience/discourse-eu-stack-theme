@@ -824,38 +824,39 @@ body:not(.staff).category-austausch {
 // =============================================================
 // === OX Category Icon Treatment v2 (CSS mask-image) ===
 //
-// Per Category: 4 Selektor-Varianten + pille-tint + icon-mask
+// Universal-Selector mit per-ID-Override:
+//   .badge-category.--style-icon[data-category-id="<id>"]
 //
-// Pille-Treatment:
-//   - Background: 15% Kategorie-Farbe auf --eu-surface-1 (dezenter Tint)
-//   - Text: 70% Kategorie-Farbe (repräsentativ)
-//   - Border: 30% Kategorie-Farbe (Akzent)
-//   -> Icon (gradient in Kategorie-Farbe) kontrastiert sauber, kein Lila-auf-Lila
+// Greift überall im DOM:
+//   - Categories-Index (/categories)
+//   - Category-Show (/c/<slug>/<id>)
+//   - Topic-Listen (/latest, /c/.../id, /top, ...)
+//   - Topic-Show-Page Category-Badge über dem Titel
+//   - Sidebar (falls dort Pills mit --style-icon erscheinen)
 //
-// Icon-Treatment:
-//   - stroke 1.5, 135deg gradient (25% lighter -> base)
-//   - mask-image (CSS-only, bfcache-safe)
+// SCHUTZ Subcategories: Pro-Teams-Substars (IDs 14/5/22/23/40/46)
+// sind NICHT in der Liste -> kein Override -> bleiben mit Lucide-Star.
+// Memory-Lesson eingehalten: 'Subcategory-Pillen nie überschreiben'.
 //
-// Greift überall:
-//   - Categories-Index, Category-Show, Topic-Listen, Topic-Header
+// PLUS Backup-Selektoren (Belt-and-Suspenders):
+//   - .category-box[data-category-id="<id>"] (data-id sitzt auf parent)
+//   - .category-heading[data-category-id="<id>"]
+//   - body.category-<slug>
 //
-// Subcategory-Schutz: nur 13 Top-Level-IDs werden gematched.
-// Pro-Teams-Substars (14, 5, 22, 23, 40, 46) bleiben Lucide-Default.
+// Memory-Lessons beachtet:
+//   - KEIN JS / setTimeout / MutationObserver (2x gescheitert)
+//   - !important auf display:none (FOUC-Schutz)
+//   - Treatment: stroke 1.5, 135deg gradient (25% lighter -> base)
 //
-// Rollback: git revert + API/UI trigger Theme-14-Update
+// Rollback: git revert + Admin-UI/API trigger Theme-14-Update
 // =============================================================
 
-// 27: diskussion (#9da4b8)
+// 27: diskussion
 .badge-category.--style-icon[data-category-id="27"],
 .category-box[data-category-id="27"] .badge-category.--style-icon,
 .category-heading[data-category-id="27"] .badge-category.--style-icon,
 body.category-diskussion .badge-category.--style-icon {
-  background: color-mix(in srgb, #9da4b8 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #9da4b8 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #9da4b8 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -875,17 +876,12 @@ body.category-diskussion .badge-category.--style-icon {
   }
 }
 
-// 28: ressourcen (#9da4b8)
+// 28: ressourcen
 .badge-category.--style-icon[data-category-id="28"],
 .category-box[data-category-id="28"] .badge-category.--style-icon,
 .category-heading[data-category-id="28"] .badge-category.--style-icon,
 body.category-ressourcen .badge-category.--style-icon {
-  background: color-mix(in srgb, #9da4b8 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #9da4b8 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #9da4b8 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -905,17 +901,12 @@ body.category-ressourcen .badge-category.--style-icon {
   }
 }
 
-// 35: training (#F58220)
+// 35: training
 .badge-category.--style-icon[data-category-id="35"],
 .category-box[data-category-id="35"] .badge-category.--style-icon,
 .category-heading[data-category-id="35"] .badge-category.--style-icon,
 body.category-training .badge-category.--style-icon {
-  background: color-mix(in srgb, #F58220 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #F58220 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #F58220 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -935,17 +926,12 @@ body.category-training .badge-category.--style-icon {
   }
 }
 
-// 37: klinik (#B54A4A)
+// 37: klinik
 .badge-category.--style-icon[data-category-id="37"],
 .category-box[data-category-id="37"] .badge-category.--style-icon,
 .category-heading[data-category-id="37"] .badge-category.--style-icon,
 body.category-klinik .badge-category.--style-icon {
-  background: color-mix(in srgb, #B54A4A 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #B54A4A 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #B54A4A 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -965,17 +951,12 @@ body.category-klinik .badge-category.--style-icon {
   }
 }
 
-// 24: ernaehrung (#4A9B4A)
+// 24: ernaehrung
 .badge-category.--style-icon[data-category-id="24"],
 .category-box[data-category-id="24"] .badge-category.--style-icon,
 .category-heading[data-category-id="24"] .badge-category.--style-icon,
 body.category-ernaehrung .badge-category.--style-icon {
-  background: color-mix(in srgb, #4A9B4A 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #4A9B4A 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #4A9B4A 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -995,17 +976,12 @@ body.category-ernaehrung .badge-category.--style-icon {
   }
 }
 
-// 7: forschung-evidenz (#2E6A9A)
+// 7: forschung-evidenz
 .badge-category.--style-icon[data-category-id="7"],
 .category-box[data-category-id="7"] .badge-category.--style-icon,
 .category-heading[data-category-id="7"] .badge-category.--style-icon,
 body.category-forschung-evidenz .badge-category.--style-icon {
-  background: color-mix(in srgb, #2E6A9A 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #2E6A9A 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #2E6A9A 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -1025,17 +1001,12 @@ body.category-forschung-evidenz .badge-category.--style-icon {
   }
 }
 
-// 18: ox-symposien-pro (#74a7ff)
+// 18: ox-symposien-pro
 .badge-category.--style-icon[data-category-id="18"],
 .category-box[data-category-id="18"] .badge-category.--style-icon,
 .category-heading[data-category-id="18"] .badge-category.--style-icon,
 body.category-ox-symposien-pro .badge-category.--style-icon {
-  background: color-mix(in srgb, #74a7ff 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #74a7ff 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #74a7ff 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -1055,17 +1026,12 @@ body.category-ox-symposien-pro .badge-category.--style-icon {
   }
 }
 
-// 48: neurowissenschaften (#8B5CF6)
+// 48: neurowissenschaften
 .badge-category.--style-icon[data-category-id="48"],
 .category-box[data-category-id="48"] .badge-category.--style-icon,
 .category-heading[data-category-id="48"] .badge-category.--style-icon,
 body.category-neurowissenschaften .badge-category.--style-icon {
-  background: color-mix(in srgb, #8B5CF6 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #8B5CF6 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #8B5CF6 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -1085,17 +1051,12 @@ body.category-neurowissenschaften .badge-category.--style-icon {
   }
 }
 
-// 19: pain-performance (#982abc)
+// 19: pain-performance
 .badge-category.--style-icon[data-category-id="19"],
 .category-box[data-category-id="19"] .badge-category.--style-icon,
 .category-heading[data-category-id="19"] .badge-category.--style-icon,
 body.category-pain-performance .badge-category.--style-icon {
-  background: color-mix(in srgb, #982abc 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #982abc 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #982abc 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -1115,17 +1076,12 @@ body.category-pain-performance .badge-category.--style-icon {
   }
 }
 
-// 39: webinare (#0088CC)
+// 39: webinare
 .badge-category.--style-icon[data-category-id="39"],
 .category-box[data-category-id="39"] .badge-category.--style-icon,
 .category-heading[data-category-id="39"] .badge-category.--style-icon,
 body.category-webinare .badge-category.--style-icon {
-  background: color-mix(in srgb, #0088CC 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #0088CC 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #0088CC 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -1145,17 +1101,12 @@ body.category-webinare .badge-category.--style-icon {
   }
 }
 
-// 16: pro-teams (#7B4EA0)
+// 16: pro-teams
 .badge-category.--style-icon[data-category-id="16"],
 .category-box[data-category-id="16"] .badge-category.--style-icon,
 .category-heading[data-category-id="16"] .badge-category.--style-icon,
 body.category-pro-teams .badge-category.--style-icon {
-  background: color-mix(in srgb, #7B4EA0 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #7B4EA0 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #7B4EA0 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -1175,17 +1126,12 @@ body.category-pro-teams .badge-category.--style-icon {
   }
 }
 
-// 47: deep-dives (#2F70AC)
+// 47: deep-dives
 .badge-category.--style-icon[data-category-id="47"],
 .category-box[data-category-id="47"] .badge-category.--style-icon,
 .category-heading[data-category-id="47"] .badge-category.--style-icon,
 body.category-deep-dives .badge-category.--style-icon {
-  background: color-mix(in srgb, #2F70AC 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #2F70AC 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #2F70AC 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;
@@ -1205,17 +1151,12 @@ body.category-deep-dives .badge-category.--style-icon {
   }
 }
 
-// 3: ox-team (#7A7A7A)
+// 3: ox-team
 .badge-category.--style-icon[data-category-id="3"],
 .category-box[data-category-id="3"] .badge-category.--style-icon,
 .category-heading[data-category-id="3"] .badge-category.--style-icon,
 body.category-ox-team .badge-category.--style-icon {
-  background: color-mix(in srgb, #7A7A7A 15%, var(--eu-surface-1)) !important;
-  color: color-mix(in srgb, #7A7A7A 70%, var(--primary)) !important;
-  border-color: color-mix(in srgb, #7A7A7A 30%, transparent) !important;
-
   svg.d-icon { display: none !important; }
-
   &::before {
     content: "";
     display: inline-block;

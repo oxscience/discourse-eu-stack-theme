@@ -347,9 +347,12 @@ h1 {
   &.active {
     background: transparent !important;
     color: var(--tertiary) !important;
-    border-bottom: 2px solid var(--tertiary);
-    border-radius: var(--eu-radius-sm) var(--eu-radius-sm) 0 0;
-    font-weight: 700;
+    // Clean straight underline: reset any inherited side/corner rounding so the
+    // 2px line stays flat instead of bowing up at the ends.
+    border: 0 !important;
+    border-bottom: 2px solid var(--tertiary) !important;
+    border-radius: 0 !important;
+    font-weight: 600;
   }
 }
 

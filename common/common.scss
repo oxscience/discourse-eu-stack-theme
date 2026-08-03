@@ -1204,27 +1204,15 @@ body.category-kommunikation .badge-category.--style-icon {
   }
 }
 
-// 50: testing-diagnostik
-.badge-category.--style-icon[data-category-id="50"],
-.category-box[data-category-id="50"] .badge-category.--style-icon,
-.category-heading[data-category-id="50"] .badge-category.--style-icon,
-body.category-testing-diagnostik .badge-category.--style-icon {
-  svg.d-icon { display: none !important; }
-  &::before {
-    content: "";
-    display: inline-block;
-    width: 1.1em;
-    height: 1.1em;
-    margin-right: 0.4em;
-    vertical-align: -0.18em;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-    background: linear-gradient(135deg, #E3BC6B 0%, #C99A3B 100%);
-    -webkit-mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect width='8' height='4' x='8' y='2' rx='1' ry='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3C/svg%3E");
-  }
+// 50: testing-diagnostik - Groessenkorrektur
+// Das Lucide-Klemmbrett ist schmal und hoch (Glyph 16x20 im 24er-Feld), die
+// Nachbarn sind breit und flach (Ordner 20x17, Handschlag 20x18). Da die Icons
+// ueber die Breite skaliert werden, ragt es sonst rund ein Fuenftel hoeher.
+// Kein Gradient-Ansatz - der ist laut gradient-icons.js zweimal gescheitert,
+// der schlichte Lucide-Umriss ist der stabile Look.
+.badge-category.--style-icon[data-category-id="50"] svg.d-icon,
+.category-box[data-category-id="50"] .badge-category.--style-icon svg.d-icon,
+.category-heading[data-category-id="50"] .badge-category.--style-icon svg.d-icon,
+body.category-testing-diagnostik .badge-category.--style-icon svg.d-icon {
+  transform: scale(0.87);
 }

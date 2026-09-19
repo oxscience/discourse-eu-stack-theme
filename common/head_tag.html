@@ -1,39 +1,39 @@
 <script>
 (function() {
-  // Only run for anonymous users
-  function isAnonymous() {
+  // Discourse 2026.9 moved the preloaded data from a data attribute to the JSON text of
+  // <script id="data-preloaded"> in the body, so it only exists once the DOM is parsed.
+  // Fail safe: if it cannot be read, nobody gets redirected.
+  function preloaded() {
     try {
       var el = document.getElementById("data-preloaded");
-      if (!el) return true;
-      var data = JSON.parse(el.dataset.preloaded);
-      return !(data.currentUser || data["current_user"]);
-    } catch(e) { return true; }
+      return JSON.parse(el.dataset.preloaded || el.textContent);
+    } catch(e) { return null; }
   }
 
-  if (!isAnonymous()) return;
+  function anonOnly() {
+    var data = preloaded();
+    if (!data || data.currentUser || data["current_user"]) return;
 
-  var PRICING_URL = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
-  var isRootPath = (window.location.pathname === '/' || window.location.pathname === '');
+    var PRICING_URL = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
 
-  // Redirect logo clicks on ALL anon pages to Shopify pricing
-  document.addEventListener('click', function(e) {
-    var logo = e.target.closest('#site-logo, .logo-big, .title-wrapper a, a.home-logo-wrapper-url');
-    if (logo) {
-      e.preventDefault();
-      e.stopPropagation();
-      window.location.href = PRICING_URL;
+    // Redirect logo clicks on ALL anon pages to Shopify pricing
+    document.addEventListener('click', function(e) {
+      var logo = e.target.closest('#site-logo, .logo-big, .title-wrapper a, a.home-logo-wrapper-url');
+      if (logo) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = PRICING_URL;
+      }
+    }, true);
+
+    // On root path: anon users go straight to the login (Pat 19.09.26; was the Shopify pricing page)
+    if (window.location.pathname === '/' || window.location.pathname === '') {
+      window.location.replace('/login');
     }
-  }, true);
-
-  // On root path: anon users go straight to the login (Pat 19.09.26; was the Shopify pricing page)
-  if (isRootPath) {
-    // Hide everything to prevent flash before redirect
-    var hideAll = document.createElement('style');
-    hideAll.textContent = 'html { visibility: hidden !important; background: #292724 !important; } #d-splash { display: none !important; }';
-    (document.head || document.documentElement).appendChild(hideAll);
-    window.location.replace('/login');
-    return;
   }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', anonOnly);
+  else anonOnly();
 
   // On signup/login pages: no landing page injection needed
   return;

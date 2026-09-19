@@ -50,18 +50,6 @@
     var data = preloaded();
     if (!data || data.currentUser || data["current_user"]) return;
 
-    var PRICING_URL = 'https://outoftheb-ox.de/pages/oxcampus#ox-pricing';
-
-    // Redirect logo clicks on ALL anon pages to Shopify pricing
-    document.addEventListener('click', function(e) {
-      var logo = e.target.closest('#site-logo, .logo-big, .title-wrapper a, a.home-logo-wrapper-url');
-      if (logo) {
-        e.preventDefault();
-        e.stopPropagation();
-        window.location.href = PRICING_URL;
-      }
-    }, true);
-
     // On root path: anon users go straight to the login (Pat 19.09.26; was the Shopify pricing page)
     if (window.location.pathname === '/' || window.location.pathname === '') {
       window.location.replace('/login');

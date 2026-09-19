@@ -25,13 +25,13 @@
     }
   }, true);
 
-  // On root path: redirect anon users directly to Shopify pricing
+  // On root path: anon users go straight to the login (Pat 19.09.26; was the Shopify pricing page)
   if (isRootPath) {
     // Hide everything to prevent flash before redirect
     var hideAll = document.createElement('style');
     hideAll.textContent = 'html { visibility: hidden !important; background: #292724 !important; } #d-splash { display: none !important; }';
     (document.head || document.documentElement).appendChild(hideAll);
-    window.location.replace(PRICING_URL);
+    window.location.replace('/login');
     return;
   }
 

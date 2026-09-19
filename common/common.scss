@@ -1251,18 +1251,22 @@ body.password-reset-page {
     display: flex;
     flex-direction: column;
     gap: 24px;
+    box-sizing: border-box;
+    width: 100%;
     max-width: 420px;
     margin: 0 auto;
     border: none;
     background: transparent;
     box-shadow: none;
-    padding: 0;
+    padding: 0 16px; // Seitenrand auf dem Handy, sonst klebt alles am Rand
   }
 
   .login-left-side,
   .login-right-side,
   .signup-left-side,
   .signup-right-side {
+    box-sizing: border-box;
+    min-width: 0;
     width: 100%;
     max-width: none;
     padding: 0;
@@ -1299,12 +1303,14 @@ body.password-reset-page {
   }
 
   .input-group input,
-  .form-kit__control-input,
+  .form-kit .form-kit__control-input,
   #credentials input,
   .signup-form input[type="text"],
   .signup-form input[type="email"],
   .signup-form input[type="password"] {
+    box-sizing: border-box; // sonst sprengt padding die 100 % auf dem Handy
     width: 100%;
+    max-width: 100%;
     height: auto;
     padding: 12px 14px;
     font-family: var(--reader-font);

@@ -1295,11 +1295,17 @@ body.password-reset-page {
     -webkit-text-fill-color: transparent;
   }
 
+  // Core gibt Formular und Buttons auf dem Handy eigenes Seiten-Padding (content-box);
+  // der Rand kommt hier schon von .login-body
   #login-form,
+  #login-buttons,
   #credentials,
   .login-form,
   .signup-form {
+    box-sizing: border-box;
     width: 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .input-group input,

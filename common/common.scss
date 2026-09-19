@@ -1357,6 +1357,15 @@ body.password-reset-page {
   .login-page-cta,
   .signup-page-cta {
     margin-top: 8px;
+    padding-left: 0; // Core rückt die Schaltfläche auf dem Handy ein; bündig mit den Feldern
+    padding-right: 0;
+  }
+
+  // form-kit setzt Höhe und Padding direkt am Feld; ohne das bleibt es 21px flach
+  .form-kit .form-kit__control-input {
+    height: auto;
+    min-height: 46px;
+    padding: 12px 14px;
   }
 
   // Passkey / alternative Anmeldung: unter dem Formular, zurückhaltend

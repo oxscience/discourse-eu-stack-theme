@@ -1,16 +1,19 @@
 <script>
 (function() {
   // Reader redirect: everyone except staff uses app.outoftheb-ox.de. Discourse stays the backend
+  // Staff decide per browser: ?reader=1 = campus root opens the reader (everything else stays
+  // Discourse), ?reader=0 = this browser always stays on Discourse.
   // (login, signup, password reset, mail unsubscribe, account preferences and admin keep working here).
   var READER = 'https://app.outoftheb-ox.de';
   var KEEP = /^\/(login|signup|session|auth|invites|email|admin|privacy|tos|faq|my\/preferences|u\/[^\/]+\/preferences|u\/(password-reset|activate-account|confirm|admin-login|account-created))(\/|$)/;
   var path = window.location.pathname;
   try {
-    // Support valve: ?reader=0 keeps this browser on Discourse, ?reader=1 switches back
+    var staffReader = false;
     var flag = new URLSearchParams(window.location.search).get('reader');
-    if (flag === '0') localStorage.setItem('ox-no-reader', '1');
-    if (flag === '1') localStorage.removeItem('ox-no-reader');
+    if (flag === '0') { localStorage.setItem('ox-no-reader', '1'); localStorage.removeItem('ox-staff-reader'); }
+    if (flag === '1') { localStorage.removeItem('ox-no-reader'); localStorage.setItem('ox-staff-reader', '1'); }
     if (localStorage.getItem('ox-no-reader')) return;
+    staffReader = !!localStorage.getItem('ox-staff-reader');
   } catch(e) {}
   if (KEEP.test(path)) return;
 
@@ -22,7 +25,8 @@
     } catch(e) { return; }  // fail safe: unreadable data (Discourse changed its format before) = no redirect
     var user = null;
     try { user = pre.currentUser ? JSON.parse(pre.currentUser) : null; } catch(e) { return; }
-    if (user && (user.staff || user.admin || user.moderator)) return;
+    var isStaff = user && (user.staff || user.admin || user.moderator);
+    if (isStaff && !(staffReader && (path === '/' || path === ''))) return;  // staff: only the root, only by choice
     if (!user && (path === '/' || path === '')) return;  // anonymous on the root: login, see below
 
     // The reader understands Discourse topic and category URLs; everything else lands on its home

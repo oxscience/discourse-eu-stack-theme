@@ -5,7 +5,7 @@
   // Discourse), ?reader=0 = this browser always stays on Discourse.
   // (login, signup, password reset, mail unsubscribe, account preferences and admin keep working here).
   var READER = 'https://app.outoftheb-ox.de';
-  var KEEP = /^\/(login|signup|session|auth|invites|email|admin|privacy|tos|faq|my\/preferences|u\/[^\/]+\/preferences|u\/(password-reset|activate-account|confirm|admin-login|account-created))(\/|$)/;
+  var KEEP = /^\/(login|signup|session|auth|invites|email|admin|privacy|tos|faq|my\/preferences|u\/[^\/]+\/preferences|u\/(password-reset|activate-account|confirm-[a-z-]+|admin-login|account-created))(\/|$)/;
   var path = window.location.pathname;
   try {
     var staffReader = false;

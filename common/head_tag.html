@@ -2,7 +2,7 @@
 (function() {
   // Reader redirect: everyone except staff uses app.outoftheb-ox.de. Discourse stays the backend
   // Staff decide per browser: ?reader=1 = campus root opens the reader (everything else stays
-  // Discourse), ?reader=0 = this browser always stays on Discourse.
+  // Discourse), ?reader=0 = back to always Discourse. Users have no way out (Pat 24.09.26).
   // (login, signup, password reset, mail confirmations, mail unsubscribe and admin keep working here;
   // account preferences live in the reader, mail footers and Discourse's own flows land there).
   var READER = 'https://app.outoftheb-ox.de';
@@ -11,9 +11,8 @@
   try {
     var staffReader = false;
     var flag = new URLSearchParams(window.location.search).get('reader');
-    if (flag === '0') { localStorage.setItem('ox-no-reader', '1'); localStorage.removeItem('ox-staff-reader'); }
-    if (flag === '1') { localStorage.removeItem('ox-no-reader'); localStorage.setItem('ox-staff-reader', '1'); }
-    if (localStorage.getItem('ox-no-reader')) return;
+    if (flag === '0') localStorage.removeItem('ox-staff-reader');
+    if (flag === '1') localStorage.setItem('ox-staff-reader', '1');
     staffReader = !!localStorage.getItem('ox-staff-reader');
   } catch(e) {}
 

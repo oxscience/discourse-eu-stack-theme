@@ -3,10 +3,11 @@
   // Reader redirect: everyone except staff uses app.outoftheb-ox.de. Discourse stays the backend
   // Staff decide per browser: ?reader=1 = campus root opens the reader (everything else stays
   // Discourse), ?reader=0 = this browser always stays on Discourse.
-  // (login, signup, password reset, mail unsubscribe, account preferences and admin keep working here).
+  // (login, signup, password reset, mail confirmations, mail unsubscribe and admin keep working here;
+  // account preferences live in the reader, mail footers and Discourse's own flows land there).
   var READER = 'https://app.outoftheb-ox.de';
-  var KEEP = /^\/(login|signup|session|auth|invites|email|admin|privacy|tos|faq|my\/preferences|u\/[^\/]+\/preferences|u\/(password-reset|activate-account|confirm-[a-z-]+|admin-login|account-created))(\/|$)/;
-  var path = window.location.pathname;
+  var KEEP = /^\/(login|signup|session|auth|invites|email|admin|privacy|tos|faq|u\/(password-reset|activate-account|confirm-[a-z-]+|admin-login|account-created))(\/|$)/;
+  var PREFS = /^\/(my|u\/[^\/]+)\/preferences(\/|$)/;
   try {
     var staffReader = false;
     var flag = new URLSearchParams(window.location.search).get('reader');
@@ -15,7 +16,22 @@
     if (localStorage.getItem('ox-no-reader')) return;
     staffReader = !!localStorage.getItem('ox-staff-reader');
   } catch(e) {}
-  if (KEEP.test(path)) return;
+
+  function redirect(path, user) {
+    if (KEEP.test(path)) return;
+    var isStaff = user && (user.staff || user.admin || user.moderator);
+    if (isStaff && !(staffReader && (path === '/' || path === ''))) return;  // staff: only the root, only by choice
+    if (!user && (path === '/' || path === '')) return;  // anonymous on the root: login, see below
+
+    // The reader understands Discourse topic and category URLs; everything else lands on its home
+    var target = /^\/(t|c)\//.test(path) ? path : /\/messages(\/|$)/.test(path) ? '/nachrichten/'
+      : PREFS.test(path) ? '/einstellungen/' : '/';
+    document.documentElement.style.visibility = 'hidden';
+    window.location.replace(READER + target);
+  }
+  // Discourse changes pages without reloading (logo, links, /login when already logged in, the
+  // "email confirmed" step); api-initializers/reader-redirect.js runs the same check on every page change.
+  window.oxReaderRedirect = redirect;
 
   function run() {
     var pre;
@@ -25,14 +41,7 @@
     } catch(e) { return; }  // fail safe: unreadable data (Discourse changed its format before) = no redirect
     var user = null;
     try { user = pre.currentUser ? JSON.parse(pre.currentUser) : null; } catch(e) { return; }
-    var isStaff = user && (user.staff || user.admin || user.moderator);
-    if (isStaff && !(staffReader && (path === '/' || path === ''))) return;  // staff: only the root, only by choice
-    if (!user && (path === '/' || path === '')) return;  // anonymous on the root: login, see below
-
-    // The reader understands Discourse topic and category URLs; everything else lands on its home
-    var target = /^\/(t|c)\//.test(path) ? path : (/\/messages(\/|$)/.test(path) ? '/nachrichten/' : '/');
-    document.documentElement.style.visibility = 'hidden';
-    window.location.replace(READER + target);
+    redirect(window.location.pathname, user);
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
   else run();

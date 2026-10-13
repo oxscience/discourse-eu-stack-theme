@@ -2,7 +2,7 @@
 (function() {
   // Reader redirect: everyone except staff uses app.outoftheb-ox.de. Discourse stays the backend
   // Staff decide per browser: ?reader=1 = campus root opens the reader (everything else stays
-  // Discourse), ?reader=0 = back to always Discourse. Users have no way out (Pat 24.09.26).
+  // Discourse), ?reader=0 = back to always Discourse. Users have no way out (Patrick 24.09.26).
   // (login, signup, password reset, mail confirmations, mail unsubscribe and admin keep working here;
   // account preferences live in the reader, mail footers and Discourse's own flows land there).
   var READER = 'https://app.outoftheb-ox.de';
@@ -62,7 +62,7 @@
     var data = preloaded();
     if (!data || data.currentUser || data["current_user"]) return;
 
-    // On root path: anon users go straight to the login (Pat 19.09.26; was the Shopify pricing page)
+    // On root path: anon users go straight to the login (Patrick 19.09.26; was the Shopify pricing page)
     if (window.location.pathname === '/' || window.location.pathname === '') {
       window.location.replace('/login');
     }

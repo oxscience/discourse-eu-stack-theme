@@ -1244,6 +1244,16 @@ body.password-reset-page {
   --reader-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", sans-serif;
   font-family: var(--reader-font);
 
+  // Schritt 1 (26.10.26): Petrol statt Kornblume/Lavendel, nur auf diesen Seiten wie im Reader
+  --tertiary: #6fbdbb;
+  --tertiary-hover: #8fd0ce;
+  --tertiary-high: #8fd0ce;
+  --tertiary-medium: rgba(111, 189, 187, 0.5);
+  --tertiary-low: rgba(111, 189, 187, 0.25);
+  --tertiary-very-low: rgba(111, 189, 187, 0.12);
+  --reader-focus: rgba(111, 189, 187, 0.28);
+  --eu-gradient: linear-gradient(135deg, #6fbdbb 0%, #aedbb7 50%, #6fbdbb 100%);
+
   // eine schmale Spalte statt Formular links / Alternativen rechts
   // (Breite an .login-body: Core setzt dort max-width 800px mit gleicher Spezifität)
   .login-body,
@@ -1331,7 +1341,7 @@ body.password-reset-page {
     &:focus {
       outline: none;
       border-color: var(--tertiary);
-      box-shadow: 0 0 0 3px rgba(109, 140, 255, 0.28);
+      box-shadow: 0 0 0 3px var(--reader-focus);
     }
   }
 
@@ -1394,5 +1404,22 @@ body.password-reset-page {
   .login-body::after,
   .login-or-separator {
     display: none;
+  }
+}
+
+// Hell-Schema der Login-Seiten: Blau-Petrol wie der Reader im Hell-Modus
+html.light-scheme {
+  body.login-page,
+  body.signup-page,
+  body.invite-page,
+  body.password-reset-page {
+    --tertiary: #0b6577;
+    --tertiary-hover: #08506a;
+    --tertiary-high: #08506a;
+    --tertiary-medium: rgba(11, 101, 119, 0.5);
+    --tertiary-low: rgba(11, 101, 119, 0.25);
+    --tertiary-very-low: rgba(11, 101, 119, 0.12);
+    --reader-focus: rgba(11, 101, 119, 0.22);
+    --eu-gradient: linear-gradient(135deg, #0b6577 0%, #1d7690 50%, #0b6577 100%);
   }
 }

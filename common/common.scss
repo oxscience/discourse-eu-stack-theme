@@ -1244,26 +1244,26 @@ body.password-reset-page {
   --reader-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", sans-serif;
   font-family: var(--reader-font);
 
-  // Schritt 1 (26.10.26): Petrol statt Kornblume/Lavendel, nur auf diesen Seiten wie im Reader
-  --tertiary: #6fbdbb;
-  --tertiary-hover: #8fd0ce;
-  --tertiary-high: #8fd0ce;
-  --tertiary-medium: rgba(111, 189, 187, 0.5);
-  --tertiary-low: rgba(111, 189, 187, 0.25);
-  --tertiary-very-low: rgba(111, 189, 187, 0.12);
-  --reader-focus: rgba(111, 189, 187, 0.28);
-  --eu-gradient: linear-gradient(135deg, #6fbdbb 0%, #aedbb7 50%, #6fbdbb 100%);
+  // Schritt 1 (26.10.26): Petrol statt Kornblume/Lavendel, nur auf diesen Seiten wie im Reader.
+  // light-dark(): Discourse schaltet Hell/Dunkel über color-scheme, nicht über eine Klasse.
+  --tertiary: light-dark(#0b6577, #6fbdbb);
+  --tertiary-hover: light-dark(#08506a, #8fd0ce);
+  --tertiary-high: light-dark(#08506a, #8fd0ce);
+  --tertiary-medium: light-dark(rgba(11, 101, 119, 0.5), rgba(111, 189, 187, 0.5));
+  --tertiary-low: light-dark(rgba(11, 101, 119, 0.25), rgba(111, 189, 187, 0.25));
+  --tertiary-very-low: light-dark(rgba(11, 101, 119, 0.12), rgba(111, 189, 187, 0.12));
+  --reader-focus: light-dark(rgba(11, 101, 119, 0.22), rgba(111, 189, 187, 0.28));
+  --eu-gradient: linear-gradient(135deg, light-dark(#0b6577, #6fbdbb) 0%, light-dark(#1d7690, #aedbb7) 50%, light-dark(#0b6577, #6fbdbb) 100%);
   // Discourse rechnet diese am :root aus --tertiary vor, deshalb hier direkt setzen
-  --tertiary-rgb: 111, 189, 187;
-  --accent-color: #6fbdbb;
-  --d-link-color: #6fbdbb;
-  --link-color: #6fbdbb;
-  --link-color-hover: #8fd0ce;
-  --d-button-primary-bg-color: #6fbdbb;
-  --d-button-primary-bg-color--hover: #8fd0ce;
-  --d-button-flat-text-color: #6fbdbb;
-  --d-button-flat-text-color--hover: #8fd0ce;
-  --token-color-border-focused: #6fbdbb;
+  --accent-color: light-dark(#0b6577, #6fbdbb);
+  --d-link-color: light-dark(#0b6577, #6fbdbb);
+  --link-color: light-dark(#0b6577, #6fbdbb);
+  --link-color-hover: light-dark(#08506a, #8fd0ce);
+  --d-button-primary-bg-color: light-dark(#0b6577, #6fbdbb);
+  --d-button-primary-bg-color--hover: light-dark(#08506a, #8fd0ce);
+  --d-button-flat-text-color: light-dark(#0b6577, #6fbdbb);
+  --d-button-flat-text-color--hover: light-dark(#08506a, #8fd0ce);
+  --token-color-border-focused: light-dark(#0b6577, #6fbdbb);
 
   // eine schmale Spalte statt Formular links / Alternativen rechts
   // (Breite an .login-body: Core setzt dort max-width 800px mit gleicher Spezifität)
@@ -1415,32 +1415,5 @@ body.password-reset-page {
   .login-body::after,
   .login-or-separator {
     display: none;
-  }
-}
-
-// Hell-Schema der Login-Seiten: Blau-Petrol wie der Reader im Hell-Modus
-html.light-scheme {
-  body.login-page,
-  body.signup-page,
-  body.invite-page,
-  body.password-reset-page {
-    --tertiary: #0b6577;
-    --tertiary-hover: #08506a;
-    --tertiary-high: #08506a;
-    --tertiary-medium: rgba(11, 101, 119, 0.5);
-    --tertiary-low: rgba(11, 101, 119, 0.25);
-    --tertiary-very-low: rgba(11, 101, 119, 0.12);
-    --reader-focus: rgba(11, 101, 119, 0.22);
-    --eu-gradient: linear-gradient(135deg, #0b6577 0%, #1d7690 50%, #0b6577 100%);
-    --tertiary-rgb: 11, 101, 119;
-    --accent-color: #0b6577;
-    --d-link-color: #0b6577;
-    --link-color: #0b6577;
-    --link-color-hover: #08506a;
-    --d-button-primary-bg-color: #0b6577;
-    --d-button-primary-bg-color--hover: #08506a;
-    --d-button-flat-text-color: #0b6577;
-    --d-button-flat-text-color--hover: #08506a;
-    --token-color-border-focused: #0b6577;
   }
 }

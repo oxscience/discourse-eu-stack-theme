@@ -1253,6 +1253,17 @@ body.password-reset-page {
   --tertiary-very-low: rgba(111, 189, 187, 0.12);
   --reader-focus: rgba(111, 189, 187, 0.28);
   --eu-gradient: linear-gradient(135deg, #6fbdbb 0%, #aedbb7 50%, #6fbdbb 100%);
+  // Discourse rechnet diese am :root aus --tertiary vor, deshalb hier direkt setzen
+  --tertiary-rgb: 111, 189, 187;
+  --accent-color: #6fbdbb;
+  --d-link-color: #6fbdbb;
+  --link-color: #6fbdbb;
+  --link-color-hover: #8fd0ce;
+  --d-button-primary-bg-color: #6fbdbb;
+  --d-button-primary-bg-color--hover: #8fd0ce;
+  --d-button-flat-text-color: #6fbdbb;
+  --d-button-flat-text-color--hover: #8fd0ce;
+  --token-color-border-focused: #6fbdbb;
 
   // eine schmale Spalte statt Formular links / Alternativen rechts
   // (Breite an .login-body: Core setzt dort max-width 800px mit gleicher Spezifität)
@@ -1421,5 +1432,15 @@ html.light-scheme {
     --tertiary-very-low: rgba(11, 101, 119, 0.12);
     --reader-focus: rgba(11, 101, 119, 0.22);
     --eu-gradient: linear-gradient(135deg, #0b6577 0%, #1d7690 50%, #0b6577 100%);
+    --tertiary-rgb: 11, 101, 119;
+    --accent-color: #0b6577;
+    --d-link-color: #0b6577;
+    --link-color: #0b6577;
+    --link-color-hover: #08506a;
+    --d-button-primary-bg-color: #0b6577;
+    --d-button-primary-bg-color--hover: #08506a;
+    --d-button-flat-text-color: #0b6577;
+    --d-button-flat-text-color--hover: #08506a;
+    --token-color-border-focused: #0b6577;
   }
 }

@@ -293,6 +293,18 @@ h1 {
   }
 }
 
+// "> **Stand heute.** …" (Sapolsky series), marked by api-initializers/now-box.js; olive like the box
+// in the Campus Reader (--now / --now-soft in its style.css). .topic-body outranks the Published Page Fix
+// theme, which is loaded after us and restyles ".topic-body .cooked blockquote".
+.topic-body .cooked blockquote.now-box {
+  border-left-color: light-dark(#4f5c0c, #b3c06e);
+  background: light-dark(rgba(143, 161, 54, 0.19), rgba(171, 185, 104, 0.14));
+
+  > p:first-child > strong:first-child {
+    color: light-dark(#4f5c0c, #b3c06e);
+  }
+}
+
 // Override Published Page Fix theme (loaded after us) — it sets inline code
 // colors via @media (prefers-color-scheme: dark) which conflicts with our
 // color scheme when system dark mode != Discourse theme mode
